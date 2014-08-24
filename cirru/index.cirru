@@ -6,7 +6,8 @@ html
     title Todolist
     meta (:charset utf-8)
     link (:rel stylesheet) (:href css/style.css)
-    link (:rel "shortcut icon") (:type image/png) (:href png/memkits.png)
+    link (:rel "shortcut icon") (:type image/png)
+      :href http://repo.tiye.me/memkits-logo/png/memkits.png
     @if (@ inDev) $ @block
       link (:rel stylesheet) (:href css/dev.css)
       link (:rel stylesheet)
@@ -19,7 +20,7 @@ html
 
   body.app-light $ .app-page
     .app-section.row-strech
-      img#logo (:src png/memkits.png)
+      img#logo (:src http://repo.tiye.me/memkits-logo/png/memkits.png)
       .flex-fill.column-center
         #page-title
           = Memkits
