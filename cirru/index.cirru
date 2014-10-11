@@ -44,3 +44,9 @@ html
       li $ a.demo-app
         :href https://github.com/Memkits/osx-fonts-view
         = "OS X font chooser"
+      li $ a.demo-app
+        :href https://github.com/Memkits/manuscript
+        = "Notebook"
+      li $ a.demo-app
+        :href https://github.com/Memkits/fragile-table
+        = "Data Table"
