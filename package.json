@@ -1,24 +1,30 @@
 {
-  "name": "memkits.org",
-  "version": "0.0.0",
-  "description": "",
+  "name": "coworkflow",
+  "version": "0.1.0",
+  "description": "Stack Workflow",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "cdn": "rsync -avr --progress dist/* tiye.me:cdn/memkits.org",
+    "tiye": "rsync -avr --progress dist/{index.html,manifest.json} tiye.me:repo/Memkits/memkits.org/",
+    "upload": "yarn cdn && yarn tiye",
+    "release": "shadow-cljs release browser",
+    "watch": "shadow-cljs watch browser",
+    "compile-ssr": "shadow-cljs compile ssr",
+    "html-dev": "env=dev node target/ssr.js && cp entry/manifest.json target/",
+    "html": "node target/ssr.js && cp entry/manifest.json dist/",
+    "index.html": "yarn compile-ssr && yarn html-dev",
+    "del": "rm -rf dist/*",
+    "serve": "http-server dist -s",
+    "build": "yarn del && yarn release && yarn compile-ssr && yarn html"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Memkits/memkits.org.git"
+    "url": "git@github.com:Memkits/memkits.org.git"
   },
-  "keywords": [],
   "author": "jiyinyiyong",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/Memkits/memkits.org/issues"
-  },
-  "homepage": "https://github.com/Memkits/memkits.org",
   "devDependencies": {
-    "mission": "0.0.7-7",
-    "shelljs": "^0.3.0"
+    "http-server": "^0.10.0",
+    "shadow-cljs": "^2.0.114"
   }
 }
