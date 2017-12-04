@@ -19,7 +19,11 @@
    {:text "Wanderlist",
     :description "A simple todolist with groups.",
     :url "http://repo.tiye.me/Memkits/wanderlist/",
-    :theme (hsl 0 0 80)}])
+    :theme (hsl 0 0 80)}
+   {:text "Unfolding leaf",
+    :description "Prototype of tree data",
+    :url "http://repo.tiye.me/Memkits/unfolding-leaf/",
+    :theme (hsl 60 90 48)}])
 
 (defn render-card [link]
   (a
