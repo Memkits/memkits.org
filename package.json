@@ -24,7 +24,10 @@
   "author": "jiyinyiyong",
   "license": "MIT",
   "devDependencies": {
-    "http-server": "^0.10.0",
-    "shadow-cljs": "^2.0.114"
+    "http-server": "^0.11.1",
+    "shadow-cljs": "^2.1.4"
+  },
+  "dependencies": {
+    "shortid": "^2.2.8"
   }
 }

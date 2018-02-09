@@ -1,7 +1,7 @@
 
 (ns app.comp.container
   (:require [hsl.core :refer [hsl]]
-            [respo-ui.style :as ui]
+            [respo-ui.core :as ui]
             [respo.macros :refer [defcomp cursor-> list-> <> div a button span]]
             [verbosely.core :refer [verbosely!]]
             [respo.comp.space :refer [=<]]
@@ -14,8 +14,12 @@
     :theme (hsl 180 80 50)}
    {:text "Pudica Schedule",
     :description "Very tiny todolist to help focus.",
-    :url "http://repo.tiye.me/Memkits/pudica-schedule/",
+    :url "http://pudica.memkits.org/",
     :theme (hsl 300 80 50)}
+   {:text "Manuscript",
+    :description "Dead-simple text notebook",
+    :url "http://repo.memkits.org/manuscript/",
+    :theme "hsl(170,35%,24%)"}
    {:text "Wanderlist",
     :description "A simple todolist with groups.",
     :url "http://repo.tiye.me/Memkits/wanderlist/",

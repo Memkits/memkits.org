@@ -4,16 +4,15 @@
             [app.comp.container :refer [comp-container]]
             [app.updater :refer [updater]]
             [app.schema :as schema]
-            [reel.util :refer [id!]]
-            [reel.core :refer [reel-updater refresh-reel listen-devtools!]]
+            [reel.util :refer [listen-devtools!]]
+            [reel.core :refer [reel-updater refresh-reel]]
             [reel.schema :as reel-schema]))
 
 (defonce *reel
   (atom (-> reel-schema/reel (assoc :base schema/store) (assoc :store schema/store))))
 
 (defn dispatch! [op op-data]
-  (let [op-id (id!), next-reel (reel-updater updater @*reel op op-data op-id)]
-    (reset! *reel next-reel)))
+  (let [next-reel (reel-updater updater @*reel op op-data)] (reset! *reel next-reel)))
 
 (def mount-target (.querySelector js/document ".app"))
 
