@@ -1,21 +1,13 @@
 {
-  "name": "coworkflow",
+  "name": "memkits",
   "version": "0.1.0",
-  "description": "Stack Workflow",
+  "description": "Memkits Site",
   "main": "index.js",
   "scripts": {
-    "cdn": "rsync -avr --progress dist/* tiye.me:cdn/memkits.org",
-    "tiye": "rsync -avr --progress dist/{index.html,manifest.json} tiye.me:repo/Memkits/memkits.org/",
-    "upload": "yarn cdn && yarn tiye",
-    "release": "shadow-cljs release browser",
     "watch": "shadow-cljs watch browser",
-    "compile-ssr": "shadow-cljs compile ssr",
-    "html-dev": "env=dev node target/ssr.js && cp entry/manifest.json target/",
-    "html": "node target/ssr.js && cp entry/manifest.json dist/",
-    "index.html": "yarn compile-ssr && yarn html-dev",
-    "del": "rm -rf dist/*",
     "serve": "http-server dist -s",
-    "build": "yarn del && yarn release && yarn compile-ssr && yarn html"
+    "repl": "rlwrap shadow-cljs clj-repl",
+    "build": "shadow-cljs clj-run build.main/build"
   },
   "repository": {
     "type": "git",
@@ -25,7 +17,7 @@
   "license": "MIT",
   "devDependencies": {
     "http-server": "^0.11.1",
-    "shadow-cljs": "^2.1.4"
+    "shadow-cljs": "^2.1.26"
   },
   "dependencies": {
     "shortid": "^2.2.8"

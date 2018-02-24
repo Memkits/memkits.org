@@ -20,6 +20,10 @@
     :description "Dead-simple text notebook",
     :url "http://repo.memkits.org/manuscript/",
     :theme "hsl(170,35%,24%)"}
+   {:text "CopyCat",
+    :description "Manage your code snippets",
+    :url "http://repo.memkits.org/copycat/",
+    :theme "hsl(0,40%,24%)"}
    {:text "Wanderlist",
     :description "A simple todolist with groups.",
     :url "http://repo.tiye.me/Memkits/wanderlist/",
