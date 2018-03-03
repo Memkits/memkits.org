@@ -20,6 +20,10 @@
     :description "Dead-simple text notebook",
     :url "http://repo.memkits.org/manuscript/",
     :theme "hsl(170,35%,24%)"}
+   {:text "EDN Grid",
+    :description "Display data in grids",
+    :url "http://repo.memkits.org/edn-grid/",
+    :theme "hsl(20,80%,60%)"}
    {:text "CopyCat",
     :description "Manage your code snippets",
     :url "http://repo.memkits.org/copycat/",
