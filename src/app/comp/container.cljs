@@ -24,6 +24,10 @@
     :description "Display data in grids",
     :url "http://repo.memkits.org/edn-grid/",
     :theme "hsl(20,80%,60%)"}
+   {:text "Color Pad",
+    :description "Minimalist HSL color picker tool",
+    :url "http://repo.memkits.org/color-pad/",
+    :theme "hsl(220,80%,70%)"}
    {:text "CopyCat",
     :description "Manage your code snippets",
     :url "http://repo.memkits.org/copycat/",
