@@ -20,6 +20,10 @@
     :description "Dead-simple text notebook",
     :url "http://repo.memkits.org/manuscript/",
     :theme "hsl(170,35%,24%)"}
+   {:text "Markdown Editor",
+    :description "Simple Markdown Editor",
+    :url "http://repo.memkits.org/markdown-editor/",
+    :theme "hsl(40,60%,60%)"}
    {:text "EDN Grid",
     :description "Display data in grids",
     :url "http://repo.memkits.org/edn-grid/",
