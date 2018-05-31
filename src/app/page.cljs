@@ -5,19 +5,18 @@
             [app.comp.container :refer [comp-container]]
             [app.schema :as schema]
             [reel.schema :as reel-schema]
-            [cljs.reader :refer [read-string]]))
+            [cljs.reader :refer [read-string]]
+            [app.config :as config]))
 
 (def base-info
-  {:title "Memkits",
-   :icon "http://cdn.tiye.me/logo/memkits.png",
+  {:title (:title config/site),
+   :icon (:icon config/site),
    :ssr nil,
    :inline-html nil,
    :inline-styles [(slurp "./entry/main.css")]})
 
 (defn dev-page []
-  (make-page
-   ""
-   (merge base-info {:styles ["http://localhost:8100/main.css"], :scripts ["/client.js"]})))
+  (make-page "" (merge base-info {:styles [(:dev-ui config/site)], :scripts ["/client.js"]})))
 
 (def preview? (= "preview" js/process.env.prod))
 
@@ -25,13 +24,13 @@
   (let [reel (-> reel-schema/reel (assoc :base schema/store) (assoc :store schema/store))
         html-content (make-string (comp-container reel))
         assets (read-string (slurp "dist/assets.edn"))
-        cdn (if preview? "" "http://cdn.tiye.me/memkits.org/")
+        cdn (if preview? "" (:cdn config/site))
         prefix-cdn (fn [x] (str cdn x))]
     (make-page
      html-content
      (merge
       base-info
-      {:styles ["http://cdn.tiye.me/favored-fonts/main.css"],
+      {:styles [(:release-ui config/site)],
        :scripts (map #(-> % :output-name prefix-cdn) assets),
        :ssr "respo-ssr"}))))
 
