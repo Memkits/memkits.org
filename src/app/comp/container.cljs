@@ -16,6 +16,10 @@
     :description "Very tiny todolist to help focus.",
     :url "http://pudica.memkits.org/",
     :theme (hsl 300 80 50)}
+   {:text "Pudica Schedule Viewer",
+    :description "Visualize done tasks",
+    :url "http://repo.memkits.org/pudica-schedule-viewer/",
+    :theme (hsl 300 80 50)}
    {:text "Manuscript",
     :description "Dead-simple text notebook",
     :url "http://repo.memkits.org/manuscript/",

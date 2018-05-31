@@ -569,6 +569,48 @@
            }
           }
          }
+         "s" {
+          :type :expr, :id "rkriy2ay7", :by "r19DAsZZM", :at 1512402500118
+          :data {
+           "T" {:type :leaf, :text "{}", :id "H1-3HCJXWMleaf", :by "r19DAsZZM", :at 1512402500946}
+           "j" {
+            :type :expr, :id "ryf6B0JQ-G", :by "r19DAsZZM", :at 1512402501216
+            :data {
+             "T" {:type :leaf, :text ":text", :id "r1WaSCk7Wf", :by "r19DAsZZM", :at 1512402514879}
+             "j" {:type :leaf, :text "|Pudica Schedule Viewer", :id "Sk-sLRk7bz", :by "root", :at 1527787426135}
+            }
+           }
+           "n" {
+            :type :expr, :id "Bkb_o-xQWf", :by "r19DAsZZM", :at 1512403360385
+            :data {
+             "T" {:type :leaf, :text ":description", :id "Bkb_o-xQWfleaf", :by "r19DAsZZM", :at 1512403364772}
+             "j" {:type :leaf, :text "\"Visualize done tasks", :id "ryfasbe7Wz", :by "root", :at 1527787453085}
+            }
+           }
+           "r" {
+            :type :expr, :id "ryxZu017Wz", :by "r19DAsZZM", :at 1512402537053
+            :data {
+             "T" {:type :leaf, :text ":url", :id "ryxZu017Wzleaf", :by "r19DAsZZM", :at 1512402538824}
+             "j" {:type :leaf, :text "|http://repo.memkits.org/pudica-schedule-viewer/", :id "SklXuR1Q-G", :by "root", :at 1527787430181}
+            }
+           }
+           "v" {
+            :type :expr, :id "rk2u0kXbf", :by "r19DAsZZM", :at 1512402547900
+            :data {
+             "T" {:type :leaf, :text ":theme", :id "rk2u0kXbfleaf", :by "r19DAsZZM", :at 1512402549165}
+             "j" {
+              :type :expr, :id "Hy-t0kX-f", :by "r19DAsZZM", :at 1512402553220
+              :data {
+               "T" {:type :leaf, :text "hsl", :id "BJ0O01mWz", :by "r19DAsZZM", :at 1512402643926}
+               "j" {:type :leaf, :text "300", :id "B1MMYAkX-M", :by "r19DAsZZM", :at 1512402556879}
+               "r" {:type :leaf, :text "80", :id "HywYCymZz", :by "r19DAsZZM", :at 1512402558930}
+               "v" {:type :leaf, :text "50", :id "SJuKCJ7Zf", :by "r19DAsZZM", :at 1512402562405}
+              }
+             }
+            }
+           }
+          }
+         }
          "t" {
           :type :expr, :id "ByHpwro8z", :by "r19DAsZZM", :at 1512403446553
           :data {
@@ -1428,12 +1470,12 @@
      }
     }
    }
-   "app.render" {
+   "app.page" {
     :ns {
      :type :expr, :id "Hyvlej_Y5arb", :by nil, :at 1499755354983
      :data {
       "T" {:type :leaf, :text "ns", :id "SkOeljdK5pHW", :by "root", :at 1499755354983}
-      "j" {:type :leaf, :text "app.render", :id "rkFgls_FqTBW", :by "root", :at 1499755354983}
+      "j" {:type :leaf, :text "app.page", :id "rkFgls_FqTBW", :by "root", :at 1499755354983}
       "r" {
        :type :expr, :id "By9lliuY5prb", :by nil, :at 1499755354983
        :data {
@@ -1627,7 +1669,7 @@
                 :type :expr, :id "H1l8go_FqTHZ", :by nil, :at 1499755354983
                 :data {
                  "T" {:type :leaf, :text "[]", :id "SJ-Lgj_t5aS-", :by "root", :at 1499755354983}
-                 "v" {:type :leaf, :text "|/main.js", :id "HJNUxo_tcpSb", :by "r19DAsZZM", :at 1518192090547}
+                 "v" {:type :leaf, :text "|/client.js", :id "HJNUxo_tcpSb", :by "root", :at 1527787501788}
                 }
                }
               }
