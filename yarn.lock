@@ -954,6 +954,10 @@ ms@2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.0.0.tgz#5608aeadfc00be6c2901df5f9861788de0d597c8"
 
+nanoid@^1.0.7:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-1.0.7.tgz#23857a9514ae8efb7374221b923a2b92be3f74f2"
+
 node-libs-browser@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/node-libs-browser/-/node-libs-browser-2.0.0.tgz#a3a59ec97024985b46e958379646f96c4b616646"
@@ -1194,9 +1198,9 @@ shadow-cljs-jar@1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/shadow-cljs-jar/-/shadow-cljs-jar-1.1.2.tgz#88664fae5957a7c21554e1a33476f1c475162c92"
 
-shadow-cljs@^2.3.30:
-  version "2.3.31"
-  resolved "https://registry.yarnpkg.com/shadow-cljs/-/shadow-cljs-2.3.31.tgz#55fdf5725ad93ffcbe786623cd963a05bcab98c6"
+shadow-cljs@^2.4.17:
+  version "2.4.17"
+  resolved "https://registry.yarnpkg.com/shadow-cljs/-/shadow-cljs-2.4.17.tgz#8d9b679eac9d259e400fa78b6f3f099ca5d23256"
   dependencies:
     babel-core "^6.26.0"
     babel-preset-env "^1.6.0"
@@ -1208,9 +1212,11 @@ shadow-cljs@^2.3.30:
     source-map-support "^0.4.15"
     ws "^3.0.0"
 
-shortid@^2.2.8:
-  version "2.2.8"
-  resolved "https://registry.yarnpkg.com/shortid/-/shortid-2.2.8.tgz#033b117d6a2e975804f6f0969dbe7d3d0b355131"
+shortid@^2.2.11:
+  version "2.2.11"
+  resolved "https://registry.yarnpkg.com/shortid/-/shortid-2.2.11.tgz#a77896f086b0dae7fce1237e29232d2aeef5738e"
+  dependencies:
+    nanoid "^1.0.7"
 
 signal-exit@^3.0.2:
   version "3.0.2"

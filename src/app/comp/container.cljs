@@ -40,6 +40,10 @@
     :description "Manage your code snippets",
     :url "http://repo.memkits.org/copycat/",
     :theme "hsl(0,40%,24%)"}
+   {:text "Sedum Slide",
+    :description "A simple markdown slide tool",
+    :url "http://repo.memkits.org/sedum-slide/",
+    :theme "hsl(90,70%,64%)"}
    {:text "Wanderlist",
     :description "A simple todolist with groups.",
     :url "http://repo.tiye.me/Memkits/wanderlist/",
