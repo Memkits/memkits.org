@@ -16,10 +16,10 @@
     :description "Very tiny todolist to help focus.",
     :url "http://pudica.memkits.org/",
     :theme (hsl 300 80 50)}
-   {:text "Pudica Schedule Viewer",
-    :description "Visualize done tasks",
-    :url "http://repo.memkits.org/pudica-schedule-viewer/",
-    :theme (hsl 300 80 50)}
+   {:text "Diff View",
+    :description "Instant diff viewer",
+    :url "http://repo.memkits.org/diffview/",
+    :theme (hsl 0 80 60)}
    {:text "Manuscript",
     :description "Dead-simple text notebook",
     :url "http://repo.memkits.org/manuscript/",
@@ -62,9 +62,10 @@
              :width 360,
              :background-color (:theme link),
              :color :white,
-             :font-size 32,
+             :font-size 16,
              :font-family "Optima, Arial, sans-serif",
-             :margin 24,
+             :margin 16,
+             :padding "0 8px",
              :text-decoration :none})}
    (div {} (<> (:text link)))
    (div {:style {:font-size 16}} (<> (or (:description link) "no description...")))))
@@ -79,16 +80,19 @@
     (div
      {:style (merge
               ui/center
-              {:height "38vh", :background-color (hsl 56 90 47), :color :white})}
+              {:height "38vh",
+               :background-color (hsl 56 90 47),
+               :color :white,
+               :padding "0 16px"})}
      (a
       {:href "https://github.com/Memkits/",
        :target "_blank",
        :style {:text-decoration :none, :color :white}}
-      (<> "Memkits" {:font-family "Optima,Arial,sans-serif", :font-size 64}))
+      (<> "Memkits" {:font-family "Optima,Arial,sans-serif", :font-size 32}))
      (div
-      {:style {:font-family "Helverica,Arial,sans-serif", :font-size 20}}
+      {:style {:font-family "Helverica,Arial,sans-serif", :font-size 16}}
       (<> "Memory toolkits built with Web technology.")))
     (list->
      :div
-     {:style (merge ui/row {:padding 80, :flex-wrap :wrap, :justify-content :center})}
+     {:style (merge ui/row {:padding 16, :flex-wrap :wrap, :justify-content :center})}
      (->> links (map-indexed (fn [idx link] [idx (render-card link)])))))))
