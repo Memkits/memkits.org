@@ -754,40 +754,6 @@
            }
           }
          }
-         "u" {
-          :type :expr, :id "S1gZ1M1uf", :by "r19DAsZZM", :at 1512403446553
-          :data {
-           "T" {:type :leaf, :text "{}", :id "r1yZzeQ-fleaf", :by "r19DAsZZM", :at 1512403447304}
-           "j" {
-            :type :expr, :id "SkxlZMl7Wf", :by "r19DAsZZM", :at 1512403447936
-            :data {
-             "T" {:type :leaf, :text ":text", :id "HJlZzlXWM", :by "r19DAsZZM", :at 1512403449751}
-             "j" {:type :leaf, :text "|CopyCat", :id "rJgMWzx7bG", :by "root", :at 1519488763446}
-            }
-           }
-           "r" {
-            :type :expr, :id "r1S-GlXZM", :by "r19DAsZZM", :at 1512403452613
-            :data {
-             "T" {:type :leaf, :text ":description", :id "r1S-GlXZMleaf", :by "r19DAsZZM", :at 1512403454530}
-             "j" {:type :leaf, :text "|Manage your code snippets", :id "Bygv-zgXZG", :by "root", :at 1519489330386}
-            }
-           }
-           "v" {
-            :type :expr, :id "HkxrzflXWz", :by "r19DAsZZM", :at 1512403469228
-            :data {
-             "T" {:type :leaf, :text ":url", :id "HkxrzflXWzleaf", :by "r19DAsZZM", :at 1512403470257}
-             "j" {:type :leaf, :text "|http://repo.memkits.org/copycat/", :id "Sy5MGlQbM", :by "root", :at 1519488768386}
-            }
-           }
-           "x" {
-            :type :expr, :id "H1e2fMl7bf", :by "r19DAsZZM", :at 1512403476421
-            :data {
-             "T" {:type :leaf, :text ":theme", :id "H1e2fMl7bfleaf", :by "r19DAsZZM", :at 1512403477602}
-             "j" {:type :leaf, :by "root", :at 1519488775212, :text "|hsl(0,40%,24%)", :id "r1YFPHjLG"}
-            }
-           }
-          }
-         }
          "uT" {
           :type :expr, :id "ByeF0PLzQX", :by "r19DAsZZM", :at 1512403446553
           :data {
