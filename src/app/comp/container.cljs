@@ -2,8 +2,7 @@
 (ns app.comp.container
   (:require [hsl.core :refer [hsl]]
             [respo-ui.core :as ui]
-            [respo.macros :refer [defcomp cursor-> list-> <> div a button span]]
-            [verbosely.core :refer [verbosely!]]
+            [respo.core :refer [defcomp cursor-> list-> <> div a button span]]
             [respo.comp.space :refer [=<]]
             [reel.comp.reel :refer [comp-reel]]))
 
@@ -44,6 +43,10 @@
     :description "A simple todolist with groups.",
     :url "http://repo.tiye.me/Memkits/wanderlist/",
     :theme (hsl 0 0 80)}
+   {:text "HN Reader",
+    :description "Simple UI for Hacker News.",
+    :url "http://repo.tiye.me/Memkits/hn-reader/",
+    :theme "rgb(255, 102, 0)"}
    {:text "Unfolding leaf",
     :description "Prototype of tree data",
     :url "http://repo.tiye.me/Memkits/unfolding-leaf/",
