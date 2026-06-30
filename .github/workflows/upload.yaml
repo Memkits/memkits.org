@@ -30,8 +30,8 @@ jobs:
       run: >
         caps --ci
         && yarn install --immutable
-        && yarn vite build --base=./
         && cr js
+        && yarn vite build --base=./
 
     - name: Deploy to server
       id: deploy
