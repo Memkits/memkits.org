@@ -14,8 +14,8 @@
         'comp-container $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defcomp comp-container (reel)
             let
-                store $ :store reel
-                states $ :states store
+                store $ option:unwrap-or (get reel :store) ({})
+                states $ option:unwrap-or (get store :states) ({})
               div
                 {} $ :style $ merge ui/global
                 div
@@ -44,7 +44,9 @@
                     [] idx $ render-card link
                 comp-reel (>> states :reel) reel $ {}
           :examples $ []
-          :schema $ :: 'Dynamic
+          :schema $ :: 'Fn $ {}
+            :return 'respo.schema/Component
+            :args $ [] 'Dynamic
         'links $ %{} 'CodeEntry (:doc |)
           :code $ quote $ def links
             []
@@ -98,9 +100,9 @@
           :code $ quote $ defn render-card (link)
             a
               {}
-                :href $ :url link
+                :href $ option:unwrap-or (get link :url) |
                 :style $ merge ui/center $ {} (:height 160) (:width 360)
-                  :background-color $ :theme link
+                  :background-color $ option:unwrap-or (get link :theme) nil
                   :color :white
                   :font-size 16
                   :font-family "|Optima, Arial, sans-serif"
@@ -108,12 +110,13 @@
                   :padding "|0 8px"
                   :text-decoration :none
               div ({})
-                <> $ :text link
+                <> $ option:unwrap-or (get link :text) |
               div
                 {} $ :style $ {} (:font-size 16)
-                <> $ or (:description link) "|no description..."
+                <> $ option:unwrap-or (get link :description) "|no description..."
           :examples $ []
-          :schema $ :: 'Dynamic
+          :schema $ :: 'Fn $ {} (:return 'Dynamic)
+            :args $ [] 'Dynamic
       :ns $ %{} 'NsEntry (:doc |)
         :code $ quote $ ns app.comp.container
           :require
@@ -126,7 +129,7 @@
       :defs $ {}
         'dev? $ %{} 'CodeEntry (:doc |)
           :code $ quote $ def dev?
-            = |dev $ get-env |mode
+            = |dev $ option:unwrap-or (get-env |mode) |
           :examples $ []
           :schema $ :: 'Dynamic
         'site $ %{} 'CodeEntry (:doc |)
@@ -147,14 +150,15 @@
           :code $ quote $ defatom *reel
             -> reel-schema/reel (assoc :base schema/store) (assoc :store schema/store)
           :examples $ []
-          :schema $ :: 'Dynamic
+          :schema $ :: 'Ref 'Dynamic
         'dispatch! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn dispatch! (op)
             let
                 next-reel $ reel-updater updater @*reel op
               reset! *reel next-reel
           :examples $ []
-          :schema $ :: 'Dynamic
+          :schema $ :: 'Fn $ {} (:return 'Unit)
+            :args $ [] 'Dynamic
         'main! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn main! ()
             if config/dev? $ load-console-formatter!
@@ -164,7 +168,9 @@
             listen-devtools! |k dispatch!
             println "|App started."
           :examples $ []
-          :schema $ :: 'Dynamic
+          :schema $ :: 'Fn $ {} (:return 'Unit)
+            :args $ []
+            :features $ #{} :js-ffi
         'mount-target $ %{} 'CodeEntry (:doc |)
           :code $ quote $ def mount-target
             js/document.querySelector |.app
@@ -179,12 +185,18 @@
                 hud! |ok~ |Ok
               hud! |error build-errors
           :examples $ []
-          :schema $ :: 'Dynamic
+          :schema $ :: 'Fn $ {} (:return 'Unit)
+            :args $ []
         'render-app! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn render-app! ()
-            render! mount-target (comp-container @*reel) dispatch!
+            render!
+              js/document.querySelector |.app
+              comp-container @*reel
+              , dispatch!
           :examples $ []
-          :schema $ :: 'Dynamic
+          :schema $ :: 'Fn $ {} (:return 'Unit)
+            :args $ []
+            :features $ #{} :js-ffi
       :ns $ %{} 'NsEntry (:doc |)
         :code $ quote $ ns app.main
           :require
@@ -211,11 +223,12 @@
       :defs $ {} $ 'updater
         %{} 'CodeEntry (:doc |)
           :code $ quote $ defn updater (store op op-id op-time)
-            tag-match op
+            match op
               (:states cursor s) (update-states store cursor s)
               _ $ do (eprintln "|Unknown op:" op) store
           :examples $ []
-          :schema $ :: 'Dynamic
+          :schema $ :: 'Fn $ {} (:return 'Dynamic)
+            :args $ [] 'Dynamic 'Dynamic 'String 'Number
       :ns $ %{} 'NsEntry (:doc |)
         :code $ quote $ ns app.updater
           :require $ [] respo.cursor :refer $ [] update-states
