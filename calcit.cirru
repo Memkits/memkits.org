@@ -3,8 +3,7 @@
   :about "|Machine-generated snapshot. Do not edit directly — changes will be overwritten. Use `calcit query` to inspect and `calcit edit`/`calcit tree` to modify. Run `calcit docs agents --contract` before mutations; use `--full` for first orientation or changed contract digest. Manual edits must follow format and schema conventions, then run `calcit edit format`."
   :package |app
   :entries $ {} $ :default
-    {} (:description |) (:init-fn 'app.main/main!) (:mode :native)
-      :reload-fn 'app.main/reload!
+    {} (:description |) (:init-fn 'app.main/main!) (:mode :js) (:reload-fn 'app.main/reload!) (:target :browser)
       :feature-policy $ {}
       :modules $ [] |respo.calcit/ |lilac/ |memof/ |respo-ui.calcit/ |respo-markdown.calcit/ |reel.calcit/
       :type-slots $ {}
@@ -25,17 +24,11 @@
                       :color :white
                       :padding "|0 16px"
                   a
-                    {}
-                      :href |https://github.com/Memkits/
-                      :target |_blank
+                    {} (:href |https://github.com/Memkits/) (:target |_blank)
                       :style $ {} (:text-decoration :none) (:color :white)
-                    <> |Memkits $ {}
-                      :font-family |Optima,Arial,sans-serif
-                      :font-size 32
+                    <> |Memkits $ {} (:font-family |Optima,Arial,sans-serif) (:font-size 32)
                   div
-                    {} $ :style $ {}
-                      :font-family |Helverica,Arial,sans-serif
-                      :font-size 16
+                    {} $ :style $ {} (:font-family |Helverica,Arial,sans-serif) (:font-size 16)
                     <> "|Memory toolkits built with Web technology."
                 list->
                   {} $ :style $ merge ui/row
@@ -44,55 +37,26 @@
                     [] idx $ render-card link
                 comp-reel (>> states :reel) reel $ {}
           :examples $ []
-          :schema $ :: 'Fn $ {}
-            :return 'respo.schema/Component
+          :schema $ :: 'Fn $ {} (:return 'respo.schema/Component)
             :args $ [] 'Dynamic
         'links $ %{} 'CodeEntry (:doc |)
           :code $ quote $ def links
             []
-              {} (:text "|EDN Formatter")
-                :description "|Toolkit to format EDN/JSON into EDN"
-                :url |http://repo.tiye.me/mvc-works/edn-formatter/
+              {} (:text "|EDN Formatter") (:description "|Toolkit to format EDN/JSON into EDN") (:url |http://repo.tiye.me/mvc-works/edn-formatter/)
                 :theme $ hsl 180 80 50
-              {} (:text "|Pudica Schedule")
-                :description "|Very tiny todolist to help focus."
-                :url |http://pudica.memkits.org/
+              {} (:text "|Pudica Schedule") (:description "|Very tiny todolist to help focus.") (:url |http://pudica.memkits.org/)
                 :theme $ hsl 300 80 50
-              {} (:text "|Diff View")
-                :description "|Instant diff viewer"
-                :url |http://repo.memkits.org/diffview/
+              {} (:text "|Diff View") (:description "|Instant diff viewer") (:url |http://repo.memkits.org/diffview/)
                 :theme $ hsl 0 80 60
-              {} (:text |Manuscript)
-                :description "|Dead-simple text notebook"
-                :url |http://repo.memkits.org/manuscript/
-                :theme "|hsl(170,35%,24%)"
-              {} (:text "|Markdown Editor")
-                :description "|Simple Markdown Editor"
-                :url |http://repo.memkits.org/markdown-editor/
-                :theme "|hsl(40,60%,60%)"
-              {} (:text "|EDN Grid")
-                :description "|Display data in grids"
-                :url |http://repo.memkits.org/edn-grid/
-                :theme "|hsl(20,80%,60%)"
-              {} (:text "|Color Pad")
-                :description "|Minimalist HSL color picker tool"
-                :url |http://repo.memkits.org/color-pad/
-                :theme "|hsl(220,80%,70%)"
-              {} (:text "|Sedum Slide")
-                :description "|A simple markdown slide tool"
-                :url |http://repo.memkits.org/sedum-slide/
-                :theme "|hsl(90,70%,64%)"
-              {} (:text |Wanderlist)
-                :description "|A simple todolist with groups."
-                :url |http://repo.tiye.me/Memkits/wanderlist/
+              {} (:text |Manuscript) (:description "|Dead-simple text notebook") (:url |http://repo.memkits.org/manuscript/) (:theme "|hsl(170,35%,24%)")
+              {} (:text "|Markdown Editor") (:description "|Simple Markdown Editor") (:url |http://repo.memkits.org/markdown-editor/) (:theme "|hsl(40,60%,60%)")
+              {} (:text "|EDN Grid") (:description "|Display data in grids") (:url |http://repo.memkits.org/edn-grid/) (:theme "|hsl(20,80%,60%)")
+              {} (:text "|Color Pad") (:description "|Minimalist HSL color picker tool") (:url |http://repo.memkits.org/color-pad/) (:theme "|hsl(220,80%,70%)")
+              {} (:text "|Sedum Slide") (:description "|A simple markdown slide tool") (:url |http://repo.memkits.org/sedum-slide/) (:theme "|hsl(90,70%,64%)")
+              {} (:text |Wanderlist) (:description "|A simple todolist with groups.") (:url |http://repo.tiye.me/Memkits/wanderlist/)
                 :theme $ hsl 0 0 80
-              {} (:text "|HN Reader")
-                :description "|Simple UI for Hacker News."
-                :url |http://repo.tiye.me/Memkits/hn-reader/
-                :theme "|rgb(255, 102, 0)"
-              {} (:text "|Unfolding leaf")
-                :description "|Prototype of tree data"
-                :url |http://repo.tiye.me/Memkits/unfolding-leaf/
+              {} (:text "|HN Reader") (:description "|Simple UI for Hacker News.") (:url |http://repo.tiye.me/Memkits/hn-reader/) (:theme "|rgb(255, 102, 0)")
+              {} (:text "|Unfolding leaf") (:description "|Prototype of tree data") (:url |http://repo.tiye.me/Memkits/unfolding-leaf/)
                 :theme $ hsl 60 90 48
           :examples $ []
           :schema $ :: 'Dynamic
@@ -134,12 +98,7 @@
           :schema $ :: 'Dynamic
         'site $ %{} 'CodeEntry (:doc |)
           :code $ quote $ def site
-            {} (:title |Memkits)
-              :icon |http://cdn.tiye.me/logo/memkits.png
-              :release-ui |http://cdn.tiye.me/favored-fonts/main.css
-              :dev-ui |http://localhost:8100/main.css
-              :storage |memkits
-              :cdn-url |http://cdn.tiye.me/memkits.org/
+            {} (:title |Memkits) (:icon |https://cdn.tiye.me/logo/memkits.png) (:release-ui |https://cdn.tiye.me/favored-fonts/main.css) (:dev-ui |http://localhost:8100/main.css) (:storage |memkits) (:cdn-url |https://cos-sh.tiye.me/Memkits/memkits.org/)
           :examples $ []
           :schema $ :: 'Dynamic
       :ns $ %{} 'NsEntry (:doc |)
@@ -173,9 +132,9 @@
             :features $ #{} :js-ffi
         'mount-target $ %{} 'CodeEntry (:doc |)
           :code $ quote $ def mount-target
-            js/document.querySelector |.app
+            option:unwrap $ query-selector |.app
           :examples $ []
-          :schema $ :: 'Dynamic
+          :schema $ :: 'js-ffi.browser/DomElementHost
         'reload! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn reload! ()
             if (nil? build-errors)
@@ -189,10 +148,7 @@
             :args $ []
         'render-app! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn render-app! ()
-            render!
-              js/document.querySelector |.app
-              comp-container @*reel
-              , dispatch!
+            render! mount-target (comp-container @*reel) dispatch!
           :examples $ []
           :schema $ :: 'Fn $ {} (:return 'Unit)
             :args $ []
@@ -210,6 +166,7 @@
             app.config :as config
             |./calcit.build-errors :default build-errors
             |bottom-tip :default hud!
+            js-ffi.browser :refer $ query-selector
     'app.schema $ %{} 'FileEntry
       :defs $ {} $ 'store
         %{} 'CodeEntry (:doc |)
