@@ -5,7 +5,7 @@
   :entries $ {} $ :default
     {} (:description |) (:init-fn 'app.main/main!) (:mode :js) (:reload-fn 'app.main/reload!) (:target :browser)
       :feature-policy $ {}
-      :modules $ [] |respo.calcit/ |lilac/ |memof/ |respo-ui.calcit/ |respo-markdown.calcit/ |reel.calcit/
+      :modules $ [] |respo.calcit/ |respo-ui.calcit/ |reel.calcit/
       :type-slots $ {}
   :files $ {}
     'app.comp.container $ %{} 'FileEntry
@@ -38,7 +38,7 @@
                 comp-reel (>> states :reel) reel $ {}
           :examples $ []
           :schema $ :: 'Fn $ {} (:return 'respo.schema/Component)
-            :args $ [] 'Dynamic
+            :args $ [] $ :: 'Map 'Tag 'Dynamic
         'links $ %{} 'CodeEntry (:doc |)
           :code $ quote $ def links
             []
@@ -59,7 +59,7 @@
               {} (:text "|Unfolding leaf") (:description "|Prototype of tree data") (:url |http://repo.tiye.me/Memkits/unfolding-leaf/)
                 :theme $ hsl 60 90 48
           :examples $ []
-          :schema $ :: 'Dynamic
+          :schema $ :: 'List $ :: 'Map 'Tag 'String
         'render-card $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn render-card (link)
             a
@@ -79,8 +79,8 @@
                 {} $ :style $ {} (:font-size 16)
                 <> $ option:unwrap-or (get link :description) "|no description..."
           :examples $ []
-          :schema $ :: 'Fn $ {} (:return 'Dynamic)
-            :args $ [] 'Dynamic
+          :schema $ :: 'Fn $ {} (:return 'respo.schema/Element)
+            :args $ [] $ :: 'Map 'Tag 'String
       :ns $ %{} 'NsEntry (:doc |)
         :code $ quote $ ns app.comp.container
           :require
@@ -95,12 +95,12 @@
           :code $ quote $ def dev?
             = |dev $ option:unwrap-or (get-env |mode) |
           :examples $ []
-          :schema $ :: 'Dynamic
+          :schema $ :: 'Bool
         'site $ %{} 'CodeEntry (:doc |)
           :code $ quote $ def site
             {} (:title |Memkits) (:icon |https://cdn.tiye.me/logo/memkits.png) (:release-ui |https://cdn.tiye.me/favored-fonts/main.css) (:dev-ui |http://localhost:8100/main.css) (:storage |memkits) (:cdn-url |https://cos-sh.tiye.me/Memkits/memkits.org/)
           :examples $ []
-          :schema $ :: 'Dynamic
+          :schema $ :: 'Map 'Tag 'String
       :ns $ %{} 'NsEntry (:doc |)
         :code $ quote $ ns app.config
     'app.main $ %{} 'FileEntry
@@ -109,7 +109,7 @@
           :code $ quote $ defatom *reel
             -> reel-schema/reel (assoc :base schema/store) (assoc :store schema/store)
           :examples $ []
-          :schema $ :: 'Ref 'Dynamic
+          :schema $ :: 'Ref $ :: 'Map 'Tag 'Dynamic
         'dispatch! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn dispatch! (op)
             let
@@ -117,7 +117,7 @@
               reset! *reel next-reel
           :examples $ []
           :schema $ :: 'Fn $ {} (:return 'Unit)
-            :args $ [] 'Dynamic
+            :args $ [] 'Enum
         'main! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn main! ()
             if config/dev? $ load-console-formatter!
@@ -140,7 +140,7 @@
             if (nil? build-errors)
               do (remove-watch *reel :changes) (clear-cache!)
                 add-watch *reel :changes $ fn (reel prev) (render-app!)
-                reset! *reel $ refresh-reel @*reel schema/store updater
+                reset! *reel $ assert-type (refresh-reel @*reel schema/store updater) (:: 'Map 'Tag 'Dynamic)
                 hud! |ok~ |Ok
               hud! |error build-errors
           :examples $ []
@@ -156,15 +156,15 @@
       :ns $ %{} 'NsEntry (:doc |)
         :code $ quote $ ns app.main
           :require
-            [] respo.core :refer $ [] render! clear-cache! realize-ssr!
-            [] app.comp.container :refer $ [] comp-container
-            [] app.updater :refer $ [] updater
-            [] app.schema :as schema
-            [] reel.util :refer $ [] listen-devtools!
-            [] reel.core :refer $ [] reel-updater refresh-reel
-            [] reel.schema :as reel-schema
+            respo.core :refer $ render! clear-cache! realize-ssr!
+            app.comp.container :refer $ comp-container
+            app.updater :refer $ updater
+            app.schema :as schema
+            reel.util :refer $ listen-devtools!
+            reel.core :refer $ reel-updater refresh-reel
+            reel.schema :as reel-schema
             app.config :as config
-            |./calcit.build-errors :default build-errors
+            |./calcit.build-errors.mjs :default build-errors
             |bottom-tip :default hud!
             js-ffi.browser :refer $ query-selector
     'app.schema $ %{} 'FileEntry
@@ -173,7 +173,7 @@
           :code $ quote $ def store
             {} $ :states $ {}
           :examples $ []
-          :schema $ :: 'Dynamic
+          :schema $ :: 'Map 'Tag 'Dynamic
       :ns $ %{} 'NsEntry (:doc |)
         :code $ quote $ ns app.schema
     'app.updater $ %{} 'FileEntry
@@ -184,8 +184,9 @@
               (:states cursor s) (update-states store cursor s)
               _ $ do (eprintln "|Unknown op:" op) store
           :examples $ []
-          :schema $ :: 'Fn $ {} (:return 'Dynamic)
-            :args $ [] 'Dynamic 'Dynamic 'String 'Number
+          :schema $ :: 'Fn $ {}
+            :args $ [] (:: 'Map 'Tag 'Dynamic) 'Enum 'String 'Number
+            :return $ :: 'Map 'Tag 'Dynamic
       :ns $ %{} 'NsEntry (:doc |)
         :code $ quote $ ns app.updater
           :require $ [] respo.cursor :refer $ [] update-states
