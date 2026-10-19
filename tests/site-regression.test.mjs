@@ -5,11 +5,10 @@ import { store } from "../js-out/app.schema.mjs";
 import { updater } from "../js-out/app.updater.mjs";
 import { links, render_card, comp_container } from "../js-out/app.comp.container.mjs";
 import { make_string } from "../js-out/respo.render.html.mjs";
-import { reel } from "../js-out/reel.schema.mjs";
-import { reel_updater } from "../js-out/reel.core.mjs";
+import { new_reel, record_op, refresh } from "../js-out/reel.typed.mjs";
 const t = c.init_tags(["states", "editor", "data", "cursor", "store", "base", "untouched", "url", "text", "description", "theme"]);
 const get = (value, key) => c.option_$o_unwrap(c.get(value, key));
-const newReel = (db) => c.assoc(c.assoc(reel, t.store, db), t.base, db);
+const newReel = (db) => new_reel(db);
 const originalLinks = [
   ["EDN Formatter", "http://repo.tiye.me/mvc-works/edn-formatter/"],
   ["Pudica Schedule", "http://pudica.memkits.org/"],
@@ -57,8 +56,11 @@ test("nested state updates preserve unrelated fields in the full store", () => {
   assert.ok(c._$e_(get(original, t.states), c._$n__$M_()), "The original states remain immutable");
   assert.doesNotThrow(() => make_string(comp_container(newReel(next))));
 });
-test("published Reel adapter accepts a single Enum state operation", () => {
-  const next = reel_updater(updater, newReel(store), c._$o__$o_(t.states, c._$L_(t.editor), "through reel"));
+test("published typed Reel records a single Enum state operation", () => {
+  const next = record_op(updater, newReel(store), c._$o__$o_(t.states, c._$L_(t.editor), "through reel"), "fixture", 0);
   assert.equal(get(get(get(get(next, t.store), t.states), t.editor), t.data), "through reel");
   assert.doesNotThrow(() => make_string(comp_container(next)));
+  const replayed = refresh(updater, next, store);
+  assert.equal(get(get(get(get(replayed, t.store), t.states), t.editor), t.data), "through reel");
+  assert.doesNotThrow(() => make_string(comp_container(replayed)));
 });

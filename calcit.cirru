@@ -13,8 +13,10 @@
         'comp-container $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defcomp comp-container (reel)
             let
-                store $ option:unwrap-or (get reel :store) ({})
-                states $ option:unwrap-or (get store :states) ({})
+                store $ :store reel
+                states $ decode-map-as
+                  option:unwrap-or (get store :states) ({})
+                  :: 'Map 'Tag 'Dynamic
               div
                 {} $ :style $ merge ui/global
                 div
@@ -35,10 +37,12 @@
                     {} (:padding 16) (:flex-wrap :wrap) (:justify-content :center)
                   -> links $ map-indexed $ fn (idx link)
                     [] idx $ render-card link
-                comp-reel (>> states :reel) reel $ {}
+                comp-typed-reel
+                  decode-map-as (>> states :reel) (:: 'Map 'Tag 'Dynamic)
+                  , reel $ {}
           :examples $ []
           :schema $ :: 'Fn $ {} (:return 'respo.schema/Component)
-            :args $ [] $ :: 'Map 'Tag 'Dynamic
+            :args $ [] $ :: 'reel.typed/State 'Enum (:: 'Map 'Tag 'Dynamic)
         'links $ %{} 'CodeEntry (:doc |)
           :code $ quote $ def links
             []
@@ -66,7 +70,7 @@
               {}
                 :href $ option:unwrap-or (get link :url) |
                 :style $ merge ui/center $ {} (:height 160) (:width 360)
-                  :background-color $ option:unwrap-or (get link :theme) nil
+                  :background-color $ option:unwrap-or (get link :theme) |
                   :color :white
                   :font-size 16
                   :font-family "|Optima, Arial, sans-serif"
@@ -84,11 +88,11 @@
       :ns $ %{} 'NsEntry (:doc |)
         :code $ quote $ ns app.comp.container
           :require
-            [] respo-ui.core :refer $ [] hsl
-            [] respo-ui.core :as ui
-            [] respo.core :refer $ [] defcomp >> list-> <> div a button span
-            [] respo.comp.space :refer $ [] =<
-            [] reel.comp.reel :refer $ [] comp-reel
+            respo-ui.core :refer $ hsl
+            respo-ui.core :as ui
+            respo.core :refer $ defcomp >> list-> <> div a button span
+            respo.comp.space :refer $ =<
+            reel.comp.reel :refer $ comp-typed-reel
     'app.config $ %{} 'FileEntry
       :defs $ {}
         'dev? $ %{} 'CodeEntry (:doc |)
@@ -106,24 +110,35 @@
     'app.main $ %{} 'FileEntry
       :defs $ {}
         '*reel $ %{} 'CodeEntry (:doc |)
-          :code $ quote $ defatom *reel
-            -> reel-schema/reel (assoc :base schema/store) (assoc :store schema/store)
+          :code $ quote $ defref *reel
+            typed/State :base schema/store :store schema/store :records ([]) :pointer (Option :none) :stopped? false :display? false :merged? false
           :examples $ []
-          :schema $ :: 'Ref $ :: 'Map 'Tag 'Dynamic
+          :schema $ :: 'Ref $ :: 'reel.typed/State 'Enum (:: 'Map 'Tag 'Dynamic)
         'dispatch! $ %{} 'CodeEntry (:doc |)
-          :code $ quote $ defn dispatch! (op)
-            let
-                next-reel $ reel-updater updater @*reel op
-              reset! *reel next-reel
+          :code $ quote $ defn dispatch! (raw-op)
+            if (enum? raw-op)
+              let
+                  op raw-op
+                let
+                    next-reel $ match (typed/decode-control op)
+                      (:some control) (typed/apply-control updater @*reel control)
+                      (:none)
+                        typed/record-op updater @*reel op
+                          decode-map-as (shortid/generate) 'String
+                          decode-map-as (js/Date.now) 'Number
+                  reset! *reel next-reel
+              raise |Dispatch-expected-an-Enum
+            , &unit
           :examples $ []
           :schema $ :: 'Fn $ {} (:return 'Unit)
-            :args $ [] 'Enum
+            :args $ [] 'Dynamic
+            :features $ #{} :js-ffi
         'main! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn main! ()
             if config/dev? $ load-console-formatter!
             println "|Running mode:" $ if config/dev? |dev |release
             render-app!
-            add-watch *reel :changes $ fn (r p) (render-app!)
+            add-watch! *reel :changes $ fn (r p) (render-app!)
             listen-devtools! |k dispatch!
             println "|App started."
           :examples $ []
@@ -134,21 +149,25 @@
           :code $ quote $ def mount-target
             option:unwrap $ query-selector |.app
           :examples $ []
-          :schema $ :: 'js-ffi.browser/DomElementHost
+          :schema $ :: 'respo.dom/DomElement
         'reload! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn reload! ()
-            if (nil? build-errors)
-              do (remove-watch *reel :changes) (clear-cache!)
-                add-watch *reel :changes $ fn (reel prev) (render-app!)
-                reset! *reel $ assert-type (refresh-reel @*reel schema/store updater) (:: 'Map 'Tag 'Dynamic)
+            if (js-nullish? build-errors)
+              do (remove-watch! *reel :changes) (clear-cache!)
+                add-watch! *reel :changes $ fn (reel prev) (render-app!)
+                reset! *reel $ typed/refresh updater @*reel schema/store
                 hud! |ok~ |Ok
               hud! |error build-errors
+            , &unit
           :examples $ []
           :schema $ :: 'Fn $ {} (:return 'Unit)
             :args $ []
+            :features $ #{} :js-ffi
         'render-app! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn render-app! ()
-            render! mount-target (comp-container @*reel) dispatch!
+            render-with! mount-target
+              fn () $ comp-container @*reel
+              , dispatch!
           :examples $ []
           :schema $ :: 'Fn $ {} (:return 'Unit)
             :args $ []
@@ -156,17 +175,17 @@
       :ns $ %{} 'NsEntry (:doc |)
         :code $ quote $ ns app.main
           :require
-            respo.core :refer $ render! clear-cache! realize-ssr!
+            respo.core :refer $ render-with! clear-cache!
             app.comp.container :refer $ comp-container
             app.updater :refer $ updater
             app.schema :as schema
             reel.util :refer $ listen-devtools!
-            reel.core :refer $ reel-updater refresh-reel
-            reel.schema :as reel-schema
             app.config :as config
             |./calcit.build-errors.mjs :default build-errors
             |bottom-tip :default hud!
-            js-ffi.browser :refer $ query-selector
+            respo.ffi.browser :refer $ query-selector
+            reel.typed :as typed
+            |shortid :as shortid
     'app.schema $ %{} 'FileEntry
       :defs $ {} $ 'store
         %{} 'CodeEntry (:doc |)
@@ -181,7 +200,13 @@
         %{} 'CodeEntry (:doc |)
           :code $ quote $ defn updater (store op op-id op-time)
             match op
-              (:states cursor s) (update-states store cursor s)
+              (:states cursor s)
+                let
+                    states $ decode-map-as
+                      option:unwrap-or (get store :states) ({})
+                      :: 'Map 'Tag 'Dynamic
+                    path $ decode-map-as cursor $ :: 'List 'Dynamic
+                  assoc store :states $ decode-map-as (update-state-tree states path s) (:: 'Map 'Tag 'Dynamic)
               _ $ do (eprintln "|Unknown op:" op) store
           :examples $ []
           :schema $ :: 'Fn $ {}
@@ -189,4 +214,4 @@
             :return $ :: 'Map 'Tag 'Dynamic
       :ns $ %{} 'NsEntry (:doc |)
         :code $ quote $ ns app.updater
-          :require $ [] respo.cursor :refer $ [] update-states
+          :require $ respo.cursor :refer $ update-state-tree
