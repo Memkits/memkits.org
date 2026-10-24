@@ -1,0 +1,1703 @@
+{
+  "namespaces": [
+    {
+      "command": "query.ns",
+      "data": {
+        "definition_count": 2,
+        "doc": "",
+        "namespace": "app.$meta",
+        "ns_code": [
+          "ns",
+          "app.$meta"
+        ]
+      },
+      "schema_version": 1
+    },
+    {
+      "command": "query.ns",
+      "data": {
+        "definition_count": 3,
+        "doc": "",
+        "namespace": "app.comp.container",
+        "ns_code": [
+          "ns",
+          "app.comp.container",
+          [
+            ":require",
+            [
+              "respo-ui.core",
+              ":refer",
+              [
+                "hsl"
+              ]
+            ],
+            [
+              "respo-ui.core",
+              ":as",
+              "ui"
+            ],
+            [
+              "respo.core",
+              ":refer",
+              [
+                "defcomp",
+                ">>",
+                "list->",
+                "<>",
+                "div",
+                "a",
+                "button",
+                "span"
+              ]
+            ],
+            [
+              "respo.comp.space",
+              ":refer",
+              [
+                "=<"
+              ]
+            ],
+            [
+              "reel.comp.reel",
+              ":refer",
+              [
+                "comp-typed-reel"
+              ]
+            ]
+          ]
+        ]
+      },
+      "schema_version": 1
+    },
+    {
+      "command": "query.ns",
+      "data": {
+        "definition_count": 2,
+        "doc": "",
+        "namespace": "app.config",
+        "ns_code": [
+          "ns",
+          "app.config"
+        ]
+      },
+      "schema_version": 1
+    },
+    {
+      "command": "query.ns",
+      "data": {
+        "definition_count": 6,
+        "doc": "",
+        "namespace": "app.main",
+        "ns_code": [
+          "ns",
+          "app.main",
+          [
+            ":require",
+            [
+              "respo.core",
+              ":refer",
+              [
+                "render-with!",
+                "clear-cache!"
+              ]
+            ],
+            [
+              "app.comp.container",
+              ":refer",
+              [
+                "comp-container"
+              ]
+            ],
+            [
+              "app.updater",
+              ":refer",
+              [
+                "updater"
+              ]
+            ],
+            [
+              "app.schema",
+              ":as",
+              "schema"
+            ],
+            [
+              "reel.util",
+              ":refer",
+              [
+                "listen-devtools!"
+              ]
+            ],
+            [
+              "app.config",
+              ":as",
+              "config"
+            ],
+            [
+              "|./calcit.build-errors.mjs",
+              ":default",
+              "build-errors"
+            ],
+            [
+              "|bottom-tip",
+              ":default",
+              "hud!"
+            ],
+            [
+              "respo.ffi.browser",
+              ":refer",
+              [
+                "query-selector"
+              ]
+            ],
+            [
+              "reel.typed",
+              ":as",
+              "typed"
+            ],
+            [
+              "|shortid",
+              ":as",
+              "shortid"
+            ]
+          ]
+        ]
+      },
+      "schema_version": 1
+    },
+    {
+      "command": "query.ns",
+      "data": {
+        "definition_count": 1,
+        "doc": "",
+        "namespace": "app.schema",
+        "ns_code": [
+          "ns",
+          "app.schema"
+        ]
+      },
+      "schema_version": 1
+    },
+    {
+      "command": "query.ns",
+      "data": {
+        "definition_count": 1,
+        "doc": "",
+        "namespace": "app.updater",
+        "ns_code": [
+          "ns",
+          "app.updater",
+          [
+            ":require",
+            [
+              "respo.cursor",
+              ":refer",
+              [
+                "update-state-tree"
+              ]
+            ]
+          ]
+        ]
+      },
+      "schema_version": 1
+    }
+  ],
+  "definitions": [
+    {
+      "command": "query.def",
+      "data": {
+        "code": [
+          "def",
+          "calcit-dirname",
+          "|"
+        ],
+        "doc": "",
+        "examples": [],
+        "ffi": null,
+        "ffi_edn": null,
+        "id": "app.$meta/calcit-dirname",
+        "js_ffi": null,
+        "schema": null,
+        "tags": [],
+        "tests": []
+      },
+      "diagnostics": [],
+      "revision": "md5:b9c073ddc99189680e33ec22dc7f5689",
+      "schema_version": 1
+    },
+    {
+      "command": "query.def",
+      "data": {
+        "code": [
+          "def",
+          "calcit-filename",
+          "|calcit.cirru"
+        ],
+        "doc": "",
+        "examples": [],
+        "ffi": null,
+        "ffi_edn": null,
+        "id": "app.$meta/calcit-filename",
+        "js_ffi": null,
+        "schema": null,
+        "tags": [],
+        "tests": []
+      },
+      "diagnostics": [],
+      "revision": "md5:a2706c65c80308f07d99e2a9ab5bd02b",
+      "schema_version": 1
+    },
+    {
+      "command": "query.def",
+      "data": {
+        "code": [
+          "defcomp",
+          "comp-container",
+          [
+            "reel"
+          ],
+          [
+            "let",
+            [
+              [
+                "store",
+                [
+                  ":store",
+                  "reel"
+                ]
+              ],
+              [
+                "states",
+                [
+                  "decode-map-as",
+                  [
+                    "option:unwrap-or",
+                    [
+                      "get",
+                      "store",
+                      ":states"
+                    ],
+                    [
+                      "{}"
+                    ]
+                  ],
+                  [
+                    "::",
+                    "'Map",
+                    "'Tag",
+                    "'Dynamic"
+                  ]
+                ]
+              ]
+            ],
+            [
+              "div",
+              [
+                "{}",
+                [
+                  ":style",
+                  [
+                    "merge",
+                    "ui/global"
+                  ]
+                ]
+              ],
+              [
+                "div",
+                [
+                  "{}",
+                  [
+                    ":style",
+                    [
+                      "merge",
+                      "ui/center",
+                      [
+                        "{}",
+                        [
+                          ":height",
+                          "|38vh"
+                        ],
+                        [
+                          ":background-color",
+                          [
+                            "hsl",
+                            "56",
+                            "90",
+                            "47"
+                          ]
+                        ],
+                        [
+                          ":color",
+                          ":white"
+                        ],
+                        [
+                          ":padding",
+                          "|0 16px"
+                        ]
+                      ]
+                    ]
+                  ]
+                ],
+                [
+                  "a",
+                  [
+                    "{}",
+                    [
+                      ":href",
+                      "|https://github.com/Memkits/"
+                    ],
+                    [
+                      ":target",
+                      "|_blank"
+                    ],
+                    [
+                      ":style",
+                      [
+                        "{}",
+                        [
+                          ":text-decoration",
+                          ":none"
+                        ],
+                        [
+                          ":color",
+                          ":white"
+                        ]
+                      ]
+                    ]
+                  ],
+                  [
+                    "<>",
+                    "|Memkits",
+                    [
+                      "{}",
+                      [
+                        ":font-family",
+                        "|Optima,Arial,sans-serif"
+                      ],
+                      [
+                        ":font-size",
+                        "32"
+                      ]
+                    ]
+                  ]
+                ],
+                [
+                  "div",
+                  [
+                    "{}",
+                    [
+                      ":style",
+                      [
+                        "{}",
+                        [
+                          ":font-family",
+                          "|Helverica,Arial,sans-serif"
+                        ],
+                        [
+                          ":font-size",
+                          "16"
+                        ]
+                      ]
+                    ]
+                  ],
+                  [
+                    "<>",
+                    "|Memory toolkits built with Web technology."
+                  ]
+                ]
+              ],
+              [
+                "list->",
+                [
+                  "{}",
+                  [
+                    ":style",
+                    [
+                      "merge",
+                      "ui/row",
+                      [
+                        "{}",
+                        [
+                          ":padding",
+                          "16"
+                        ],
+                        [
+                          ":flex-wrap",
+                          ":wrap"
+                        ],
+                        [
+                          ":justify-content",
+                          ":center"
+                        ]
+                      ]
+                    ]
+                  ]
+                ],
+                [
+                  "->",
+                  "links",
+                  [
+                    "map-indexed",
+                    [
+                      "fn",
+                      [
+                        "idx",
+                        "link"
+                      ],
+                      [
+                        "[]",
+                        "idx",
+                        [
+                          "render-card",
+                          "link"
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+              ],
+              [
+                "comp-typed-reel",
+                [
+                  "decode-map-as",
+                  [
+                    ">>",
+                    "states",
+                    ":reel"
+                  ],
+                  [
+                    "::",
+                    "'Map",
+                    "'Tag",
+                    "'Dynamic"
+                  ]
+                ],
+                "reel",
+                [
+                  "{}"
+                ]
+              ]
+            ]
+          ]
+        ],
+        "doc": "",
+        "examples": [],
+        "ffi": null,
+        "ffi_edn": null,
+        "id": "app.comp.container/comp-container",
+        "js_ffi": null,
+        "schema": [
+          "{}",
+          [
+            ":kind",
+            ":fn"
+          ],
+          [
+            ":return",
+            "'respo.schema/Component"
+          ],
+          [
+            ":args",
+            [
+              "[]",
+              [
+                "::",
+                "'reel.typed/State",
+                "'Enum",
+                [
+                  "::",
+                  "'Map",
+                  "'Tag",
+                  "'Dynamic"
+                ]
+              ]
+            ]
+          ]
+        ],
+        "tags": [],
+        "tests": []
+      },
+      "diagnostics": [],
+      "revision": "md5:c08a35a3c6c41ea26e7682dfc322e408",
+      "schema_version": 1
+    },
+    {
+      "command": "query.def",
+      "data": {
+        "code": [
+          "def",
+          "links",
+          [
+            "[]",
+            [
+              "{}",
+              [
+                ":text",
+                "|EDN Formatter"
+              ],
+              [
+                ":description",
+                "|Toolkit to format EDN/JSON into EDN"
+              ],
+              [
+                ":url",
+                "|http://repo.tiye.me/mvc-works/edn-formatter/"
+              ],
+              [
+                ":theme",
+                [
+                  "hsl",
+                  "180",
+                  "80",
+                  "50"
+                ]
+              ]
+            ],
+            [
+              "{}",
+              [
+                ":text",
+                "|Pudica Schedule"
+              ],
+              [
+                ":description",
+                "|Very tiny todolist to help focus."
+              ],
+              [
+                ":url",
+                "|http://pudica.memkits.org/"
+              ],
+              [
+                ":theme",
+                [
+                  "hsl",
+                  "300",
+                  "80",
+                  "50"
+                ]
+              ]
+            ],
+            [
+              "{}",
+              [
+                ":text",
+                "|Diff View"
+              ],
+              [
+                ":description",
+                "|Instant diff viewer"
+              ],
+              [
+                ":url",
+                "|http://repo.memkits.org/diffview/"
+              ],
+              [
+                ":theme",
+                [
+                  "hsl",
+                  "0",
+                  "80",
+                  "60"
+                ]
+              ]
+            ],
+            [
+              "{}",
+              [
+                ":text",
+                "|Manuscript"
+              ],
+              [
+                ":description",
+                "|Dead-simple text notebook"
+              ],
+              [
+                ":url",
+                "|http://repo.memkits.org/manuscript/"
+              ],
+              [
+                ":theme",
+                "|hsl(170,35%,24%)"
+              ]
+            ],
+            [
+              "{}",
+              [
+                ":text",
+                "|Markdown Editor"
+              ],
+              [
+                ":description",
+                "|Simple Markdown Editor"
+              ],
+              [
+                ":url",
+                "|http://repo.memkits.org/markdown-editor/"
+              ],
+              [
+                ":theme",
+                "|hsl(40,60%,60%)"
+              ]
+            ],
+            [
+              "{}",
+              [
+                ":text",
+                "|EDN Grid"
+              ],
+              [
+                ":description",
+                "|Display data in grids"
+              ],
+              [
+                ":url",
+                "|http://repo.memkits.org/edn-grid/"
+              ],
+              [
+                ":theme",
+                "|hsl(20,80%,60%)"
+              ]
+            ],
+            [
+              "{}",
+              [
+                ":text",
+                "|Color Pad"
+              ],
+              [
+                ":description",
+                "|Minimalist HSL color picker tool"
+              ],
+              [
+                ":url",
+                "|http://repo.memkits.org/color-pad/"
+              ],
+              [
+                ":theme",
+                "|hsl(220,80%,70%)"
+              ]
+            ],
+            [
+              "{}",
+              [
+                ":text",
+                "|Sedum Slide"
+              ],
+              [
+                ":description",
+                "|A simple markdown slide tool"
+              ],
+              [
+                ":url",
+                "|http://repo.memkits.org/sedum-slide/"
+              ],
+              [
+                ":theme",
+                "|hsl(90,70%,64%)"
+              ]
+            ],
+            [
+              "{}",
+              [
+                ":text",
+                "|Wanderlist"
+              ],
+              [
+                ":description",
+                "|A simple todolist with groups."
+              ],
+              [
+                ":url",
+                "|http://repo.tiye.me/Memkits/wanderlist/"
+              ],
+              [
+                ":theme",
+                [
+                  "hsl",
+                  "0",
+                  "0",
+                  "80"
+                ]
+              ]
+            ],
+            [
+              "{}",
+              [
+                ":text",
+                "|HN Reader"
+              ],
+              [
+                ":description",
+                "|Simple UI for Hacker News."
+              ],
+              [
+                ":url",
+                "|http://repo.tiye.me/Memkits/hn-reader/"
+              ],
+              [
+                ":theme",
+                "|rgb(255, 102, 0)"
+              ]
+            ],
+            [
+              "{}",
+              [
+                ":text",
+                "|Unfolding leaf"
+              ],
+              [
+                ":description",
+                "|Prototype of tree data"
+              ],
+              [
+                ":url",
+                "|http://repo.tiye.me/Memkits/unfolding-leaf/"
+              ],
+              [
+                ":theme",
+                [
+                  "hsl",
+                  "60",
+                  "90",
+                  "48"
+                ]
+              ]
+            ]
+          ]
+        ],
+        "doc": "",
+        "examples": [],
+        "ffi": null,
+        "ffi_edn": null,
+        "id": "app.comp.container/links",
+        "js_ffi": null,
+        "schema": [
+          "::",
+          "'List",
+          [
+            "::",
+            "'Map",
+            "'Tag",
+            "'String"
+          ]
+        ],
+        "tags": [],
+        "tests": []
+      },
+      "diagnostics": [],
+      "revision": "md5:cf944a8a80d410cdf083be896419911d",
+      "schema_version": 1
+    },
+    {
+      "command": "query.def",
+      "data": {
+        "code": [
+          "defn",
+          "render-card",
+          [
+            "link"
+          ],
+          [
+            "a",
+            [
+              "{}",
+              [
+                ":href",
+                [
+                  "option:unwrap-or",
+                  [
+                    "get",
+                    "link",
+                    ":url"
+                  ],
+                  "|"
+                ]
+              ],
+              [
+                ":style",
+                [
+                  "merge",
+                  "ui/center",
+                  [
+                    "{}",
+                    [
+                      ":height",
+                      "160"
+                    ],
+                    [
+                      ":width",
+                      "360"
+                    ],
+                    [
+                      ":background-color",
+                      [
+                        "option:unwrap-or",
+                        [
+                          "get",
+                          "link",
+                          ":theme"
+                        ],
+                        "|"
+                      ]
+                    ],
+                    [
+                      ":color",
+                      ":white"
+                    ],
+                    [
+                      ":font-size",
+                      "16"
+                    ],
+                    [
+                      ":font-family",
+                      "|Optima, Arial, sans-serif"
+                    ],
+                    [
+                      ":margin",
+                      "16"
+                    ],
+                    [
+                      ":padding",
+                      "|0 8px"
+                    ],
+                    [
+                      ":text-decoration",
+                      ":none"
+                    ]
+                  ]
+                ]
+              ]
+            ],
+            [
+              "div",
+              [
+                "{}"
+              ],
+              [
+                "<>",
+                [
+                  "option:unwrap-or",
+                  [
+                    "get",
+                    "link",
+                    ":text"
+                  ],
+                  "|"
+                ]
+              ]
+            ],
+            [
+              "div",
+              [
+                "{}",
+                [
+                  ":style",
+                  [
+                    "{}",
+                    [
+                      ":font-size",
+                      "16"
+                    ]
+                  ]
+                ]
+              ],
+              [
+                "<>",
+                [
+                  "option:unwrap-or",
+                  [
+                    "get",
+                    "link",
+                    ":description"
+                  ],
+                  "|no description..."
+                ]
+              ]
+            ]
+          ]
+        ],
+        "doc": "",
+        "examples": [],
+        "ffi": null,
+        "ffi_edn": null,
+        "id": "app.comp.container/render-card",
+        "js_ffi": null,
+        "schema": [
+          "{}",
+          [
+            ":kind",
+            ":fn"
+          ],
+          [
+            ":return",
+            "'respo.schema/Element"
+          ],
+          [
+            ":args",
+            [
+              "[]",
+              [
+                "::",
+                "'Map",
+                "'Tag",
+                "'String"
+              ]
+            ]
+          ]
+        ],
+        "tags": [],
+        "tests": []
+      },
+      "diagnostics": [],
+      "revision": "md5:05716b81892507683256b7f23cd83095",
+      "schema_version": 1
+    },
+    {
+      "command": "query.def",
+      "data": {
+        "code": [
+          "def",
+          "dev?",
+          [
+            "=",
+            "|dev",
+            [
+              "option:unwrap-or",
+              [
+                "get-env",
+                "|mode"
+              ],
+              "|"
+            ]
+          ]
+        ],
+        "doc": "",
+        "examples": [],
+        "ffi": null,
+        "ffi_edn": null,
+        "id": "app.config/dev?",
+        "js_ffi": null,
+        "schema": "'Bool",
+        "tags": [],
+        "tests": []
+      },
+      "diagnostics": [],
+      "revision": "md5:813357fe38125c89c01659fdfda94295",
+      "schema_version": 1
+    },
+    {
+      "command": "query.def",
+      "data": {
+        "code": [
+          "def",
+          "site",
+          [
+            "{}",
+            [
+              ":title",
+              "|Memkits"
+            ],
+            [
+              ":icon",
+              "|https://cdn.tiye.me/logo/memkits.png"
+            ],
+            [
+              ":release-ui",
+              "|https://cdn.tiye.me/favored-fonts/main.css"
+            ],
+            [
+              ":dev-ui",
+              "|http://localhost:8100/main.css"
+            ],
+            [
+              ":storage",
+              "|memkits"
+            ],
+            [
+              ":cdn-url",
+              "|https://cos-sh.tiye.me/Memkits/memkits.org/"
+            ]
+          ]
+        ],
+        "doc": "",
+        "examples": [],
+        "ffi": null,
+        "ffi_edn": null,
+        "id": "app.config/site",
+        "js_ffi": null,
+        "schema": [
+          "::",
+          "'Map",
+          "'Tag",
+          "'String"
+        ],
+        "tags": [],
+        "tests": []
+      },
+      "diagnostics": [],
+      "revision": "md5:e11a02fb11f2fc61f9d44ff188279515",
+      "schema_version": 1
+    },
+    {
+      "command": "query.def",
+      "data": {
+        "code": [
+          "defref",
+          "*reel",
+          [
+            "typed/State",
+            ":base",
+            "schema/store",
+            ":store",
+            "schema/store",
+            ":records",
+            [
+              "[]"
+            ],
+            ":pointer",
+            [
+              "Option",
+              ":none"
+            ],
+            ":stopped?",
+            "false",
+            ":display?",
+            "false",
+            ":merged?",
+            "false"
+          ]
+        ],
+        "doc": "",
+        "examples": [],
+        "ffi": null,
+        "ffi_edn": null,
+        "id": "app.main/*reel",
+        "js_ffi": null,
+        "schema": [
+          "::",
+          "'Ref",
+          [
+            "::",
+            "'reel.typed/State",
+            "'Enum",
+            [
+              "::",
+              "'Map",
+              "'Tag",
+              "'Dynamic"
+            ]
+          ]
+        ],
+        "tags": [],
+        "tests": []
+      },
+      "diagnostics": [],
+      "revision": "md5:e44d8c4f31c472dfdfeb6897e6aeeb5b",
+      "schema_version": 1
+    },
+    {
+      "command": "query.def",
+      "data": {
+        "code": [
+          "defn",
+          "dispatch!",
+          [
+            "raw-op"
+          ],
+          [
+            "if",
+            [
+              "enum?",
+              "raw-op"
+            ],
+            [
+              "let",
+              [
+                [
+                  "op",
+                  "raw-op"
+                ]
+              ],
+              [
+                "let",
+                [
+                  [
+                    "next-reel",
+                    [
+                      "match",
+                      [
+                        "typed/decode-control",
+                        "op"
+                      ],
+                      [
+                        [
+                          ":some",
+                          "control"
+                        ],
+                        [
+                          "typed/apply-control",
+                          "updater",
+                          "@*reel",
+                          "control"
+                        ]
+                      ],
+                      [
+                        [
+                          ":none"
+                        ],
+                        [
+                          "typed/record-op",
+                          "updater",
+                          "@*reel",
+                          "op",
+                          [
+                            "decode-map-as",
+                            [
+                              "shortid/generate"
+                            ],
+                            "'String"
+                          ],
+                          [
+                            "decode-map-as",
+                            [
+                              "js/Date.now"
+                            ],
+                            "'Number"
+                          ]
+                        ]
+                      ]
+                    ]
+                  ]
+                ],
+                [
+                  "reset!",
+                  "*reel",
+                  "next-reel"
+                ]
+              ]
+            ],
+            [
+              "raise",
+              "|Dispatch-expected-an-Enum"
+            ]
+          ],
+          "&unit"
+        ],
+        "doc": "",
+        "examples": [],
+        "ffi": null,
+        "ffi_edn": null,
+        "id": "app.main/dispatch!",
+        "js_ffi": null,
+        "schema": [
+          "{}",
+          [
+            ":kind",
+            ":fn"
+          ],
+          [
+            ":return",
+            "'Unit"
+          ],
+          [
+            ":args",
+            [
+              "[]",
+              "'Dynamic"
+            ]
+          ],
+          [
+            ":features",
+            [
+              "#{}",
+              ":js-ffi"
+            ]
+          ]
+        ],
+        "tags": [],
+        "tests": []
+      },
+      "diagnostics": [],
+      "revision": "md5:13ac9185a43f623107ad00adb954c39c",
+      "schema_version": 1
+    },
+    {
+      "command": "query.def",
+      "data": {
+        "code": [
+          "defn",
+          "main!",
+          [],
+          [
+            "if",
+            "config/dev?",
+            [
+              "load-console-formatter!"
+            ]
+          ],
+          [
+            "println",
+            "|Running mode:",
+            [
+              "if",
+              "config/dev?",
+              "|dev",
+              "|release"
+            ]
+          ],
+          [
+            "render-app!"
+          ],
+          [
+            "add-watch!",
+            "*reel",
+            ":changes",
+            [
+              "fn",
+              [
+                "r",
+                "p"
+              ],
+              [
+                "render-app!"
+              ]
+            ]
+          ],
+          [
+            "listen-devtools!",
+            "|k",
+            "dispatch!"
+          ],
+          [
+            "println",
+            "|App started."
+          ]
+        ],
+        "doc": "",
+        "examples": [],
+        "ffi": null,
+        "ffi_edn": null,
+        "id": "app.main/main!",
+        "js_ffi": null,
+        "schema": [
+          "{}",
+          [
+            ":kind",
+            ":fn"
+          ],
+          [
+            ":return",
+            "'Unit"
+          ],
+          [
+            ":args",
+            [
+              "[]"
+            ]
+          ],
+          [
+            ":features",
+            [
+              "#{}",
+              ":js-ffi"
+            ]
+          ]
+        ],
+        "tags": [],
+        "tests": []
+      },
+      "diagnostics": [],
+      "revision": "md5:f71708db3ca0ef5be3148f6071028c1d",
+      "schema_version": 1
+    },
+    {
+      "command": "query.def",
+      "data": {
+        "code": [
+          "def",
+          "mount-target",
+          [
+            "option:unwrap",
+            [
+              "query-selector",
+              "|.app"
+            ]
+          ]
+        ],
+        "doc": "",
+        "examples": [],
+        "ffi": null,
+        "ffi_edn": null,
+        "id": "app.main/mount-target",
+        "js_ffi": null,
+        "schema": "'respo.dom/DomElement",
+        "tags": [],
+        "tests": []
+      },
+      "diagnostics": [],
+      "revision": "md5:89746ae8e1be5a5d3404cefcaf546cf5",
+      "schema_version": 1
+    },
+    {
+      "command": "query.def",
+      "data": {
+        "code": [
+          "defn",
+          "reload!",
+          [],
+          [
+            "if",
+            [
+              "js-nullish?",
+              "build-errors"
+            ],
+            [
+              "do",
+              [
+                "remove-watch!",
+                "*reel",
+                ":changes"
+              ],
+              [
+                "clear-cache!"
+              ],
+              [
+                "add-watch!",
+                "*reel",
+                ":changes",
+                [
+                  "fn",
+                  [
+                    "reel",
+                    "prev"
+                  ],
+                  [
+                    "render-app!"
+                  ]
+                ]
+              ],
+              [
+                "reset!",
+                "*reel",
+                [
+                  "typed/refresh",
+                  "updater",
+                  "@*reel",
+                  "schema/store"
+                ]
+              ],
+              [
+                "hud!",
+                "|ok~",
+                "|Ok"
+              ]
+            ],
+            [
+              "hud!",
+              "|error",
+              "build-errors"
+            ]
+          ],
+          "&unit"
+        ],
+        "doc": "",
+        "examples": [],
+        "ffi": null,
+        "ffi_edn": null,
+        "id": "app.main/reload!",
+        "js_ffi": null,
+        "schema": [
+          "{}",
+          [
+            ":kind",
+            ":fn"
+          ],
+          [
+            ":return",
+            "'Unit"
+          ],
+          [
+            ":args",
+            [
+              "[]"
+            ]
+          ],
+          [
+            ":features",
+            [
+              "#{}",
+              ":js-ffi"
+            ]
+          ]
+        ],
+        "tags": [],
+        "tests": []
+      },
+      "diagnostics": [],
+      "revision": "md5:f64a091bb9c75d3333b958efda5a9ad4",
+      "schema_version": 1
+    },
+    {
+      "command": "query.def",
+      "data": {
+        "code": [
+          "defn",
+          "render-app!",
+          [],
+          [
+            "render-with!",
+            "mount-target",
+            [
+              "fn",
+              [],
+              [
+                "comp-container",
+                "@*reel"
+              ]
+            ],
+            "dispatch!"
+          ]
+        ],
+        "doc": "",
+        "examples": [],
+        "ffi": null,
+        "ffi_edn": null,
+        "id": "app.main/render-app!",
+        "js_ffi": null,
+        "schema": [
+          "{}",
+          [
+            ":kind",
+            ":fn"
+          ],
+          [
+            ":return",
+            "'Unit"
+          ],
+          [
+            ":args",
+            [
+              "[]"
+            ]
+          ],
+          [
+            ":features",
+            [
+              "#{}",
+              ":js-ffi"
+            ]
+          ]
+        ],
+        "tags": [],
+        "tests": []
+      },
+      "diagnostics": [],
+      "revision": "md5:89ff72d0eccf46545dc1610f0f08d422",
+      "schema_version": 1
+    },
+    {
+      "command": "query.def",
+      "data": {
+        "code": [
+          "def",
+          "store",
+          [
+            "{}",
+            [
+              ":states",
+              [
+                "{}"
+              ]
+            ]
+          ]
+        ],
+        "doc": "",
+        "examples": [],
+        "ffi": null,
+        "ffi_edn": null,
+        "id": "app.schema/store",
+        "js_ffi": null,
+        "schema": [
+          "::",
+          "'Map",
+          "'Tag",
+          "'Dynamic"
+        ],
+        "tags": [],
+        "tests": []
+      },
+      "diagnostics": [],
+      "revision": "md5:b2ce14eaa42d4868adad01c686d76671",
+      "schema_version": 1
+    },
+    {
+      "command": "query.def",
+      "data": {
+        "code": [
+          "defn",
+          "updater",
+          [
+            "store",
+            "op",
+            "op-id",
+            "op-time"
+          ],
+          [
+            "match",
+            "op",
+            [
+              [
+                ":states",
+                "cursor",
+                "s"
+              ],
+              [
+                "let",
+                [
+                  [
+                    "states",
+                    [
+                      "decode-map-as",
+                      [
+                        "option:unwrap-or",
+                        [
+                          "get",
+                          "store",
+                          ":states"
+                        ],
+                        [
+                          "{}"
+                        ]
+                      ],
+                      [
+                        "::",
+                        "'Map",
+                        "'Tag",
+                        "'Dynamic"
+                      ]
+                    ]
+                  ],
+                  [
+                    "path",
+                    [
+                      "decode-map-as",
+                      "cursor",
+                      [
+                        "::",
+                        "'List",
+                        "'Dynamic"
+                      ]
+                    ]
+                  ]
+                ],
+                [
+                  "assoc",
+                  "store",
+                  ":states",
+                  [
+                    "decode-map-as",
+                    [
+                      "update-state-tree",
+                      "states",
+                      "path",
+                      "s"
+                    ],
+                    [
+                      "::",
+                      "'Map",
+                      "'Tag",
+                      "'Dynamic"
+                    ]
+                  ]
+                ]
+              ]
+            ],
+            [
+              "_",
+              [
+                "do",
+                [
+                  "eprintln",
+                  "|Unknown op:",
+                  "op"
+                ],
+                "store"
+              ]
+            ]
+          ]
+        ],
+        "doc": "",
+        "examples": [],
+        "ffi": null,
+        "ffi_edn": null,
+        "id": "app.updater/updater",
+        "js_ffi": null,
+        "schema": [
+          "{}",
+          [
+            ":kind",
+            ":fn"
+          ],
+          [
+            ":args",
+            [
+              "[]",
+              [
+                "::",
+                "'Map",
+                "'Tag",
+                "'Dynamic"
+              ],
+              "'Enum",
+              "'String",
+              "'Number"
+            ]
+          ],
+          [
+            ":return",
+            [
+              "::",
+              "'Map",
+              "'Tag",
+              "'Dynamic"
+            ]
+          ]
+        ],
+        "tags": [],
+        "tests": []
+      },
+      "diagnostics": [],
+      "revision": "md5:61339d7890970538ff3eb7145052a329",
+      "schema_version": 1
+    }
+  ],
+  "config": {
+    "schema_version": 1,
+    "command": "config.show",
+    "data": {
+      "package": "app",
+      "version": "0.1.1",
+      "selected_entry": null,
+      "entries": [
+        {
+          "name": "default",
+          "mode": "js",
+          "target": "browser",
+          "init_fn": "app.main/main!",
+          "reload_fn": "app.main/reload!",
+          "description": "",
+          "modules": [
+            "respo.calcit/",
+            "respo-ui.calcit/",
+            "reel.calcit/"
+          ],
+          "type_slots": {},
+          "feature_policy": {}
+        }
+      ],
+      "verification_schema_version": 1,
+      "verification_profiles": []
+    },
+    "diagnostics": [],
+    "revision": "md5:12468ec17deae496f388603909fe74a8"
+  }
+}

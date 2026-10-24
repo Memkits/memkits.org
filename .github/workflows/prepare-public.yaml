@@ -1,0 +1,63 @@
+name: Temporary official Memkits site migration
+on:
+  push:
+    branches: [prepare/memkits-site-public031]
+permissions:
+  contents: read
+jobs:
+  prepare:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38
+        with:
+          node-version: 24
+          package-manager-cache: false
+      - name: Enable Corepack
+        run: |
+          corepack enable
+          corepack prepare yarn@4.18.0 --activate
+      - uses: calcit-lang/setup-calcit@ca701be5a471759e442aa053cd100720bbe1f09f
+        with:
+          tools: calcit,caps
+          caps-version: "0.1.1"
+          deps-file: deps.cirru
+      - name: Resolve coherent formal graph
+        run: |
+          set -euo pipefail
+          caps --strict --ci
+          yarn install --immutable
+          caps verify --toolchain
+          git diff --quiet -- deps.cirru package.json yarn.lock .yarnrc.yml
+      - name: Original seven assertions before edits
+        run: |
+          set -euo pipefail
+          mkdir -p acceptance
+          calcit --check-only --all-defs
+          calcit test --list --format json > acceptance/test-list-before.json
+          yarn build
+          node --test tests/*.test.mjs
+      - name: Official guarded source transaction
+        run: node apply-reviewed.mjs
+      - name: Complete original gates and production build
+        run: |
+          set -euo pipefail
+          calcit edit format
+          calcit --check-only --all-defs
+          calcit fix --workflow strict --verify --format json | tee acceptance/strict.json | jq -e '.data.workflow.status == "passed" and .diagnostics == []'
+          calcit test --list --format json > acceptance/test-list-after.json
+          yarn build
+          node --test tests/*.test.mjs
+          cp calcit.cirru acceptance/snapshot.cirru
+          cp -R dist acceptance/dist
+      - name: Save official evidence
+        if: always()
+        uses: actions/upload-artifact@v7.0.1
+        with:
+          name: memkits-site-source-evidence
+          path: acceptance/
+          if-no-files-found: error
+          retention-days: 7
