@@ -43,7 +43,12 @@ dispatch 在实际事件边界检查 Enum，记录与控制分别走 typed API�
 使用 typed refresh；`render-with!` 管理 memo frame。DOM 查询使用 Respo 的公开宿主适配，
 不以强转混同不同 DOM trait。
 本地不运行 Caps；开发者仍须执行上述安装步骤生成模块链接，CI 独立 strict 解析。
-本轮需用正式 0.30.1 CI 产物重新验收页面，旧绿色检查不代替源码改写后的测试。
+本轮官方 Linux 0.30.1 事务 CI 在改写前后均通过 all-defs（188 个定义）和原七项 Node 测试
+（0 失败、0 跳过），改写后完整 strict 为 passed/diagnostics=[]。项目没有附着测试/示例，
+不把空选择当作额外测试成功。相同 CI 静态产物已实际验收 11 个卡片和链接目标、
+原 Shift/Meta/Alt/K 调试快捷键、空记录下 Merge/Reset/Close，以及关闭后刷新回首页，
+控制台无 warning/error。空记录下 Step/Run 不可用，点击未改变页面，不冒充非空回放验收；
+非空记录与 typed refresh 的合同由原 Node 测试覆盖。没有访问外部工具或改写浏览器存档。
 移动端、外部历史链接可达性和 HMR 不自动视为已验收，不访问生产或真实用户数据。
 
 `yarn dev` 编译一次再启动 Vite，实时编译另开终端运行 `calcit calcit.cirru js -w`，不增加 concurrently。模块优先兼容正式版本，不新增 hash 或机械降级 alpha。
