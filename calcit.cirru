@@ -15,26 +15,26 @@
             let
                 store $ :store reel
                 states $ decode-map-as
-                  option:unwrap-or (get store :states) ({})
+                  .unwrap-or (get store :states) ({})
                   :: 'Map 'Tag 'Dynamic
               div
-                {} $ :style $ merge ui/global
+                {} $ :style ui/global
                 div
-                  {} $ :style $ merge ui/center
+                  {} $ :style $ .merge ui/center
                     {} (:height |38vh)
                       :background-color $ hsl 56 90 47
-                      :color :white
+                      :color |white
                       :padding "|0 16px"
                   a
                     {} (:href |https://github.com/Memkits/) (:target |_blank)
-                      :style $ {} (:text-decoration :none) (:color :white)
-                    <> |Memkits $ {} (:font-family |Optima,Arial,sans-serif) (:font-size 32)
+                      :style $ {} (:text-decoration |none) (:color |white)
+                    <> |Memkits $ {} (:font-family |Optima,Arial,sans-serif) (:font-size |32px)
                   div
-                    {} $ :style $ {} (:font-family |Helverica,Arial,sans-serif) (:font-size 16)
+                    {} $ :style $ {} (:font-family |Helverica,Arial,sans-serif) (:font-size |16px)
                     <> "|Memory toolkits built with Web technology."
                 list->
-                  {} $ :style $ merge ui/row
-                    {} (:padding 16) (:flex-wrap :wrap) (:justify-content :center)
+                  {} $ :style $ .merge ui/row
+                    {} (:padding |16px) (:flex-wrap |wrap) (:justify-content |center)
                   -> links $ map-indexed $ fn (idx link)
                     [] idx $ render-card link
                 comp-typed-reel
@@ -68,20 +68,20 @@
           :code $ quote $ defn render-card (link)
             a
               {}
-                :href $ option:unwrap-or (get link :url) |
-                :style $ merge ui/center $ {} (:height 160) (:width 360)
-                  :background-color $ option:unwrap-or (get link :theme) |
-                  :color :white
-                  :font-size 16
+                :href $ .unwrap-or (get link :url) |
+                :style $ .merge ui/center $ {} (:height |160px) (:width |360px)
+                  :background-color $ .unwrap-or (get link :theme) |
+                  :color |white
+                  :font-size |16px
                   :font-family "|Optima, Arial, sans-serif"
-                  :margin 16
+                  :margin |16px
                   :padding "|0 8px"
-                  :text-decoration :none
+                  :text-decoration |none
               div ({})
-                <> $ option:unwrap-or (get link :text) |
+                <> $ .unwrap-or (get link :text) |
               div
-                {} $ :style $ {} (:font-size 16)
-                <> $ option:unwrap-or (get link :description) "|no description..."
+                {} $ :style $ {} (:font-size |16px)
+                <> $ .unwrap-or (get link :description) "|no description..."
           :examples $ []
           :schema $ :: 'Fn $ {} (:return 'respo.schema/Element)
             :args $ [] $ :: 'Map 'Tag 'String
@@ -97,7 +97,7 @@
       :defs $ {}
         'dev? $ %{} 'CodeEntry (:doc |)
           :code $ quote $ def dev?
-            = |dev $ option:unwrap-or (get-env |mode) |
+            = |dev $ .unwrap-or (get-env |mode) |
           :examples $ []
           :schema $ :: 'Bool
         'site $ %{} 'CodeEntry (:doc |)
@@ -147,7 +147,7 @@
             :features $ #{} :js-ffi
         'mount-target $ %{} 'CodeEntry (:doc |)
           :code $ quote $ def mount-target
-            option:unwrap $ query-selector |.app
+            .unwrap $ query-selector |.app
           :examples $ []
           :schema $ :: 'respo.dom/DomElement
         'reload! $ %{} 'CodeEntry (:doc |)
@@ -203,7 +203,7 @@
               (:states cursor s)
                 let
                     states $ decode-map-as
-                      option:unwrap-or (get store :states) ({})
+                      .unwrap-or (get store :states) ({})
                       :: 'Map 'Tag 'Dynamic
                     path $ decode-map-as cursor $ :: 'List 'Dynamic
                   assoc store :states $ decode-map-as (update-state-tree states path s) (:: 'Map 'Tag 'Dynamic)
