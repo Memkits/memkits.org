@@ -10,14 +10,15 @@ http://memkits.org/
 
 https://github.com/calcit-lang/respo-calcit-workflow
 
-### 使用者影响：正式 Calcit 0.30.1
+### 使用者影响：正式 Calcit 0.31.0
 
-CLI/procs 配对正式 0.30.1，直接依赖固定为已发布的 Reel 0.6.42、Respo 0.16.126
-和 UI 0.8.1，JS-FFI 0.2.6 / Router 0.8.38 为传递依赖。请重新安装完整模块图、生成 JS 并刷新页面，
+CLI/procs 配对正式 0.31.0，直接依赖固定为已发布的 Reel 0.7.0-alpha.4、Respo 0.17.0-alpha.4
+和 UI 0.9.0-alpha.4，JS-FFI 0.2.7 / Router 0.9.0-alpha.3 为传递依赖。模块图仍含 alpha。请重新安装完整模块图、生成 JS 并刷新页面，
 不要混用旧 alpha 缓存。11 个工具卡片的名称、URL、顺序不变；UI 升级可能有样式差异，
 不承诺逐像素相同，也不代表外部历史链接已经恢复可达。
 
-迁移实际旧 Option/Map 调用，单参数 merge 直接使用原 Map，样式值按原渲染规则改为等价 String，
+本次只新增 Respo DispatchOp 入口绑定，原 Enum 检查与业务/Reel 分派保持。
+此前已迁移实际旧 Option/Map 调用，单参数 merge 直接使用原 Map，样式值按原渲染规则改为等价 String，
 匹配 `Map<Tag, String>` 样式合同，不改变布局尺寸。开放 Map store、业务测试或状态协议不变；
 没有引入 Markdown 模块。保留 all-defs 和完整 strict，不增加脚本、预算、强转或 concurrently。
 真实 `hud!` 的热更新成功/错误展示不变，不替换成 raise。沿用已有 Action 固定引用、COS 内置
@@ -43,9 +44,9 @@ dispatch 在实际事件边界检查 Enum，记录与控制分别走 typed API�
 使用 typed refresh；`render-with!` 管理 memo frame。DOM 查询使用 Respo 的公开宿主适配，
 不以强转混同不同 DOM trait。
 本地不运行 Caps；开发者仍须执行上述安装步骤生成模块链接，CI 独立 strict 解析。
-本轮官方 Linux 0.30.1 事务 CI 在改写前后均通过 all-defs（188 个定义）和原七项 Node 测试
+此前官方 Linux 0.30.1 事务 CI 在改写前后均通过 all-defs（188 个定义）和原七项 Node 测试
 （0 失败、0 跳过），改写后完整 strict 为 passed/diagnostics=[]。项目没有附着测试/示例，
-不把空选择当作额外测试成功。相同 CI 静态产物已实际验收 11 个卡片和链接目标、
+不把空选择当作额外测试成功。此前相同 CI 静态产物已实际验收 11 个卡片和链接目标、
 原 Shift/Meta/Alt/K 调试快捷键、空记录下 Merge/Reset/Close，以及关闭后刷新回首页，
 控制台无 warning/error。空记录下 Step/Run 不可用，点击未改变页面，不冒充非空回放验收；
 非空记录与 typed refresh 的合同由原 Node 测试覆盖。没有访问外部工具或改写浏览器存档。
