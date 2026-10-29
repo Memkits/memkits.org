@@ -10,7 +10,23 @@ http://memkits.org/
 
 https://github.com/calcit-lang/respo-calcit-workflow
 
-### 使用者影响：正式 Calcit 0.31.0
+### 使用者影响：Calcit 0.32.0 迁移候选
+
+CLI/procs 配对正式 0.32.0，需重新安装完整图、生成 JS 并刷新。UI 模块暂用本地候选，
+正式标签整图待验收。11 个工具卡片的名称、URL 和顺序保持，不承诺所有外链可达。
+
+本项目已无需要改写的旧类型形式；官方格式化后 14 个定义的完整视图与 schema 不变。
+保留原严格门禁、七项业务/浏览器边界测试与 HUD，不新增强转或验证脚本。
+Actions 使用已核对原 SHA 的精确正式 tag，npm 依赖隔离统一为一小时，
+COS 内置 verify 与前端部署路径不变。
+
+本地完整 strict（diagnostics 为空）、全部 189 个定义、原七项 Node 回归、
+构建和 immutable 安装通过；实际页面 11 个卡片名称/链接及刷新验收通过，
+warn/error 为空。独立只读评审无待处理问题。未访问外部工具或操作存档，
+本轮未重新验收调试快捷键、移动端或 HMR。正式标签整图和 PR/Linux CI 尚待验证。
+下方 0.31 说明为历史记录。
+
+### 历史：正式 Calcit 0.31.0
 
 CLI/procs 配对正式 0.31.0，直接依赖固定为已发布的 Reel 0.7.0-alpha.4、Respo 0.17.0-alpha.4
 和 UI 0.9.0-alpha.4，JS-FFI 0.2.7 / Router 0.9.0-alpha.3 为传递依赖。模块图仍含 alpha。请重新安装完整模块图、生成 JS 并刷新页面，
