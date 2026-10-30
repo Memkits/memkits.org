@@ -10,36 +10,21 @@ http://memkits.org/
 
 https://github.com/calcit-lang/respo-calcit-workflow
 
-### 使用者影响：Calcit 0.32.0 迁移候选
+### 使用者影响
 
-CLI/procs 配对正式 0.32.0，需重新安装完整图、生成 JS 并刷新。UI 模块暂用本地候选，
-正式标签整图待验收。11 个工具卡片的名称、URL 和顺序保持，不承诺所有外链可达。
+CLI / `@calcit/procs` 配对正式 **0.32.1**，升级后重新安装整张依赖图、生成JS并
+完整刷新。使用已发布UI **0.9.0**、Respo **0.17.1** 与Reel **0.7.0-alpha.5**，
+传递JS-FFI **0.2.9**，Router仍含alpha，不宣称整图全部稳定，不使用本地候选或hash。
 
-本项目已无需要改写的旧类型形式；官方格式化后 14 个定义的完整视图与 schema 不变。
-保留原严格门禁、七项业务/浏览器边界测试与 HUD，不新增强转或验证脚本。
-Actions 使用已核对原 SHA 的精确正式 tag，npm 依赖隔离统一为一小时，
-COS 内置 verify 与前端部署路径不变。
+本项目没有遗留类型写法需要改写；14个项目定义的完整视图与schema保持。11个工具
+卡片的名称、URL、顺序及共享资源不变，不承诺外链可达或样式逐像素相同。
+保留原完整strict、全定义、七项业务/浏览器边界测试和HUD，不新增强转、预算、
+验证脚本或concurrently。CI显式断言strict通过且诊断为空。
 
-本地完整 strict（diagnostics 为空）、全部 189 个定义、原七项 Node 回归、
-构建和 immutable 安装通过；实际页面 11 个卡片名称/链接及刷新验收通过，
-warn/error 为空。独立只读评审无待处理问题。未访问外部工具或操作存档，
-本轮未重新验收调试快捷键、移动端或 HMR。正式标签整图和 PR/Linux CI 尚待验证。
-下方 0.31 说明为历史记录。
-
-### 历史：正式 Calcit 0.31.0
-
-CLI/procs 配对正式 0.31.0，直接依赖固定为已发布的 Reel 0.7.0-alpha.4、Respo 0.17.0-alpha.4
-和 UI 0.9.0-alpha.4，JS-FFI 0.2.7 / Router 0.9.0-alpha.3 为传递依赖。模块图仍含 alpha。请重新安装完整模块图、生成 JS 并刷新页面，
-不要混用旧 alpha 缓存。11 个工具卡片的名称、URL、顺序不变；UI 升级可能有样式差异，
-不承诺逐像素相同，也不代表外部历史链接已经恢复可达。
-
-本次只新增 Respo DispatchOp 入口绑定，原 Enum 检查与业务/Reel 分派保持。
-此前已迁移实际旧 Option/Map 调用，单参数 merge 直接使用原 Map，样式值按原渲染规则改为等价 String，
-匹配 `Map<Tag, String>` 样式合同，不改变布局尺寸。开放 Map store、业务测试或状态协议不变；
-没有引入 Markdown 模块。保留 all-defs 和完整 strict，不增加脚本、预算、强转或 concurrently。
-真实 `hud!` 的热更新成功/错误展示不变，不替换成 raise。沿用已有 Action 固定引用、COS 内置
-verify 和前端部署路径；安装后防止清单漂移，整个 job/上传分别限时 15/10 分钟。
-本 PR 不授权合并、生产部署、后端重启或发版。
+真实发布依赖图由Caps strict/toolchain验证，npm等待保持一小时，无单包例外。
+此前0.32.0候选已验收11个卡片及刷新，本次未重跑浏览器，也未访问外部工具或
+操作存档。调试快捷键、移动端、外链可达性和HMR不视为本轮已验证。
+本PR不合并、生产部署、重启后端或发版；COS内置verify和原前端路径保持。
 
 ### 开发与验收范围
 
@@ -59,14 +44,9 @@ CI 使用正式 COS action v1.2.0 内置 HTML 同域脚本/样式引用及公开
 dispatch 在实际事件边界检查 Enum，记录与控制分别走 typed API。热更新移除旧强断言，
 使用 typed refresh；`render-with!` 管理 memo frame。DOM 查询使用 Respo 的公开宿主适配，
 不以强转混同不同 DOM trait。
-本地不运行 Caps；开发者仍须执行上述安装步骤生成模块链接，CI 独立 strict 解析。
-此前官方 Linux 0.30.1 事务 CI 在改写前后均通过 all-defs（188 个定义）和原七项 Node 测试
-（0 失败、0 跳过），改写后完整 strict 为 passed/diagnostics=[]。项目没有附着测试/示例，
-不把空选择当作额外测试成功。此前相同 CI 静态产物已实际验收 11 个卡片和链接目标、
-原 Shift/Meta/Alt/K 调试快捷键、空记录下 Merge/Reset/Close，以及关闭后刷新回首页，
-控制台无 warning/error。空记录下 Step/Run 不可用，点击未改变页面，不冒充非空回放验收；
-非空记录与 typed refresh 的合同由原 Node 测试覆盖。没有访问外部工具或改写浏览器存档。
-移动端、外部历史链接可达性和 HMR 不自动视为已验收，不访问生产或真实用户数据。
+本轮使用真实Caps strict/toolchain验证已发布图，保留原七项首页、链接、状态及浏览器
+边界回归。本项目没有附带测试/示例，不把空选择当额外测试成功。旧浏览器验收的
+调试快捷键和空记录操作不代替本次同范围验收；非空typed refresh合同由原Node测试覆盖。
 
 `yarn dev` 编译一次再启动 Vite，实时编译另开终端运行 `calcit calcit.cirru js -w`，不增加 concurrently。模块优先兼容正式版本，不新增 hash 或机械降级 alpha。
 
