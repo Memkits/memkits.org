@@ -16,7 +16,7 @@
                 store $ :store reel
                 states $ decode-map-as
                   .unwrap-or (get store :states) ({})
-                  :: 'Map 'Tag 'Dynamic
+                  Map Tag Dynamic
               div
                 {} $ :style ui/global
                 div
@@ -37,12 +37,10 @@
                     {} (:padding |16px) (:flex-wrap |wrap) (:justify-content |center)
                   -> links $ map-indexed $ fn (idx link)
                     [] idx $ render-card link
-                comp-typed-reel
-                  decode-map-as (>> states :reel) (:: 'Map 'Tag 'Dynamic)
-                  , reel $ {}
+                comp-typed-reel (>> states :reel) reel $ {}
           :examples $ []
           :schema $ quote $ Fn
-            reel.typed/State Enum $ Map Tag Dynamic
+            reel.typed/State app.schema/Op $ Map Tag Dynamic
             -> respo.schema/Component
         'links $ %{} 'CodeEntry (:doc |)
           :code $ quote $ def links
@@ -114,24 +112,24 @@
             typed/State :base schema/store :store schema/store :records ([]) :pointer (Option :none) :stopped? false :display? false :merged? false
           :examples $ []
           :schema $ quote $ Ref
-            reel.typed/State Enum $ Map Tag Dynamic
+            reel.typed/State app.schema/Op $ Map Tag Dynamic
         'dispatch! $ %{} 'CodeEntry (:doc |)
-          :code $ quote $ defn dispatch! (raw-op)
-            if (enum? raw-op)
-              let
-                  op raw-op
-                let
-                    next-reel $ match (typed/decode-control op)
-                      (:some control) (typed/apply-control updater @*reel control)
-                      (:none)
-                        typed/record-op updater @*reel op
-                          decode-map-as (shortid/generate) 'String
-                          decode-map-as (js/Date.now) 'Number
-                  reset! *reel next-reel
-              raise |Dispatch-expected-an-Enum
+          :code $ quote $ defn dispatch! (op)
+            match (typed/decode-control op)
+              (:some control)
+                reset! *reel $ typed/apply-control updater @*reel control
+              (:none)
+                match op
+                  (:states cursor state)
+                    let
+                        action $ schema/Op :states
+                          decode-map-as cursor $ List respo.schema/CoordKey
+                          , state
+                      reset! *reel $ typed/record-op updater @*reel action (generate-id!) (js-ffi.shared/now-ms)
+                  _ $ eprintln "|Unknown op:" op
             , &unit
           :examples $ []
-          :schema $ quote $ Fn Dynamic (-> Unit) (:features :js-ffi)
+          :schema $ quote $ Fn AnyEnum (-> Unit) (:features :js-ffi)
         'main! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn main! ()
             if config/dev? $ load-console-formatter!
@@ -178,13 +176,17 @@
             |bottom-tip :default hud!
             respo.ffi.browser :refer $ query-selector
             reel.typed :as typed
-            |shortid :as shortid
     'app.schema $ %{} 'FileEntry
       :defs $ {}
         'DispatchOp $ %{} 'CodeEntry (:doc "|Respo 入口事件合同，容纳应用和 Reel 控制事件；代表值不发送。")
           :code $ quote $ def DispatchOp (:: :unhandled)
           :examples $ []
-          :schema $ quote Enum
+          :schema $ quote AnyEnum
+        'Op $ %{} 'CodeEntry (:doc |)
+          :code $ quote $ defenum Op
+            :states (List respo.schema/CoordKey) Dynamic
+          :examples $ []
+          :schema $ quote EnumDef
         'store $ %{} 'CodeEntry (:doc |)
           :code $ quote $ def store
             {} $ :states $ {}
@@ -196,17 +198,15 @@
       :defs $ {} $ 'updater
         %{} 'CodeEntry (:doc |)
           :code $ quote $ defn updater (store op op-id op-time)
-            match op
-              (:states cursor s)
-                let
-                    states $ decode-map-as
-                      .unwrap-or (get store :states) ({})
-                      :: 'Map 'Tag 'Dynamic
-                    path $ decode-map-as cursor $ :: 'List 'Dynamic
-                  assoc store :states $ decode-map-as (update-state-tree states path s) (:: 'Map 'Tag 'Dynamic)
-              _ $ do (eprintln "|Unknown op:" op) store
+            match op $
+              :states cursor s
+              let
+                  states $ decode-map-as
+                    .unwrap-or (get store :states) ({})
+                    Map Tag Dynamic
+                assoc store :states $ decode-map-as (update-state-tree states cursor s) (Map Tag Dynamic)
           :examples $ []
-          :schema $ quote $ Fn (Map Tag Dynamic) Enum String Number
+          :schema $ quote $ Fn (Map Tag Dynamic) app.schema/Op String Number
             -> $ Map Tag Dynamic
       :ns $ %{} 'NsEntry (:doc |)
         :code $ quote $ ns app.updater

@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import * as c from "../js-out/calcit.core.mjs";
-import { store } from "../js-out/app.schema.mjs";
+import { Op, store } from "../js-out/app.schema.mjs";
 import { updater } from "../js-out/app.updater.mjs";
 import { links, render_card, comp_container } from "../js-out/app.comp.container.mjs";
 import { make_string } from "../js-out/respo.render.html.mjs";
@@ -50,14 +50,14 @@ test("card Option fallbacks render without trying to use an Option as a String",
 });
 test("nested state updates preserve unrelated fields in the full store", () => {
   const original = c.assoc(store, t.untouched, "keep this field");
-  const next = updater(original, c._$o__$o_(t.states, c._$L_(t.editor), "draft"), "fixture", 0);
+  const next = updater(original, c._PCT__$o__$o_(Op, t.states, c._$L_(t.editor), "draft"), "fixture", 0);
   assert.equal(get(next, t.untouched), "keep this field");
   assert.equal(get(get(get(next, t.states), t.editor), t.data), "draft");
   assert.ok(c._$e_(get(original, t.states), c._$n__$M_()), "The original states remain immutable");
   assert.doesNotThrow(() => make_string(comp_container(newReel(next))));
 });
 test("published typed Reel records a single Enum state operation", () => {
-  const next = record_op(updater, newReel(store), c._$o__$o_(t.states, c._$L_(t.editor), "through reel"), "fixture", 0);
+  const next = record_op(updater, newReel(store), c._PCT__$o__$o_(Op, t.states, c._$L_(t.editor), "through reel"), "fixture", 0);
   assert.equal(get(get(get(get(next, t.store), t.states), t.editor), t.data), "through reel");
   assert.doesNotThrow(() => make_string(comp_container(next)));
   const replayed = refresh(updater, next, store);
