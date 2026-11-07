@@ -12,10 +12,10 @@ https://github.com/calcit-lang/respo-calcit-workflow
 
 ### 使用者影响
 
-升级到 Calcit 和 `@calcit/procs` **0.35.1** 后，请重新安装依赖、生成 JS 并刷新。11 个工具卡片的名称、URL、顺序与页面 HUD 继续适用。
+升级到 Calcit 和 `@calcit/procs` **0.37.0** 后，请重新安装依赖、生成 JS 并刷新。11 个工具卡片的名称、URL、顺序与页面 HUD 继续适用。
 
-Reel 状态使用名义 `Op`，在入口区分 Reel 控制与首页状态更新，并校验状态路径的 `CoordKey`。原开放 Store 继续保留未更新的字段。
-依赖图使用正式 Respo **0.19.4**、Reel **0.9.2**、UI **0.15.1**，传递依赖 JS-FFI **0.2.13** 和 Router **0.12.1**。
+入口校验 `CoordKey` 并把事件收敛为 `Op | reel.typed/Control`。首页操作进入历史，Reel 控制走独立分支。原开放 Store 继续保留未更新的字段。
+依赖图使用正式 Respo **0.19.5**、Reel **0.10.0**、UI **0.15.2**，传递依赖 JS-FFI **0.2.13** 和 Router **0.12.2**。
 
 ### 开发与验收范围
 

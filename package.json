@@ -15,7 +15,7 @@
     "vite": "8.3.3"
   },
   "dependencies": {
-    "@calcit/procs": "0.35.1"
+    "@calcit/procs": "0.37.0"
   },
   "scripts": {
     "compile": "calcit calcit.cirru js",
