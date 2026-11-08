@@ -6,7 +6,7 @@
     {} (:description |) (:init-fn 'app.main/main!) (:mode :js) (:reload-fn 'app.main/reload!) (:target :browser)
       :feature-policy $ {}
       :modules $ [] |respo.calcit/ |respo-ui.calcit/ |reel.calcit/
-      :type-slots $ {} $ :dispatch-op |app.schema/DispatchOp
+      :type-slots $ {} $ :dispatch-op 'app.schema/DispatchOp
   :files $ {}
     'app.comp.container $ %{} 'FileEntry
       :defs $ {}
@@ -116,20 +116,26 @@
         'dispatch! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn dispatch! (op)
             match (typed/decode-control op)
-              (:some control)
-                reset! *reel $ typed/apply-control updater @*reel control
+              (:some control) (dispatch-resolved! control)
               (:none)
                 match op
                   (:states cursor state)
-                    let
-                        action $ schema/Op :states
-                          decode-map-as cursor $ List respo.schema/CoordKey
-                          , state
-                      reset! *reel $ typed/record-op updater @*reel action (generate-id!) (js-ffi.shared/now-ms)
+                    dispatch-resolved! $ schema/Op :states
+                      decode-map-as cursor $ List respo.schema/CoordKey
+                      , state
                   _ $ eprintln "|Unknown op:" op
             , &unit
           :examples $ []
           :schema $ quote $ Fn AnyEnum (-> Unit) (:features :js-ffi)
+        'dispatch-resolved! $ %{} 'CodeEntry (:doc |)
+          :code $ quote $ defn dispatch-resolved! (op)
+            hint-fn $ Fn app.schema/ResolvedOp (-> Unit) (:features :js-ffi)
+            reset! *reel $ match op
+              (reel.typed/Control control) (typed/apply-control updater @*reel control)
+              (app.schema/Op action)
+                typed/record-op updater @*reel action (generate-id!) (js-ffi.shared/now-ms)
+            , &unit
+          :examples $ []
         'main! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn main! ()
             if config/dev? $ load-console-formatter!
@@ -187,6 +193,10 @@
             :states (List respo.schema/CoordKey) Dynamic
           :examples $ []
           :schema $ quote EnumDef
+        'ResolvedOp $ %{} 'CodeEntry (:doc |)
+          :code $ quote $ defunion ResolvedOp Op reel.typed/Control
+          :examples $ []
+          :schema $ quote UnionDef
         'store $ %{} 'CodeEntry (:doc |)
           :code $ quote $ def store
             {} $ :states $ {}
