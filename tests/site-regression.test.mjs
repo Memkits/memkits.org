@@ -37,7 +37,7 @@ test("all 11 original tool names and URLs are retained in their original order",
   });
 });
 test("homepage renders its heading, GitHub link and all 11 cards", () => {
-  const html = make_string(comp_container(newReel(store)));
+  const html = make_string(comp_container(newReel(store), () => {}));
   assert.ok(html.includes("Memory toolkits built with Web technology."));
   assert.ok(html.includes('href="https://github.com/Memkits/"'));
   originalLinks.forEach(([name, url]) => {
@@ -54,13 +54,13 @@ test("nested state updates preserve unrelated fields in the full store", () => {
   assert.equal(get(next, t.untouched), "keep this field");
   assert.equal(get(get(get(next, t.states), t.editor), t.data), "draft");
   assert.ok(c._$e_(get(original, t.states), c._$n__$M_()), "The original states remain immutable");
-  assert.doesNotThrow(() => make_string(comp_container(newReel(next))));
+  assert.doesNotThrow(() => make_string(comp_container(newReel(next), () => {})));
 });
 test("published typed Reel records a single Enum state operation", () => {
   const next = record_op(updater, newReel(store), c._PCT__$o__$o_(Op, t.states, c._$L_(t.editor), "through reel"), "fixture", 0);
   assert.equal(get(get(get(get(next, t.store), t.states), t.editor), t.data), "through reel");
-  assert.doesNotThrow(() => make_string(comp_container(next)));
+  assert.doesNotThrow(() => make_string(comp_container(next, () => {})));
   const replayed = refresh(updater, next, store);
   assert.equal(get(get(get(get(replayed, t.store), t.states), t.editor), t.data), "through reel");
-  assert.doesNotThrow(() => make_string(comp_container(replayed)));
+  assert.doesNotThrow(() => make_string(comp_container(replayed, () => {})));
 });
