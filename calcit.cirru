@@ -32,11 +32,12 @@
                   div
                     {} $ :style $ {} (:font-family |Helverica,Arial,sans-serif) (:font-size |16px)
                     <> "|Memory toolkits built with Web technology."
-                list->
+                keyed->
                   {} $ :style $ .merge ui/row
                     {} (:padding |16px) (:flex-wrap |wrap) (:justify-content |center)
-                  -> links $ map-indexed $ fn (idx link)
-                    [] idx $ render-card link
+                  map-indexed links $ fn (idx link)
+                    hint-fn $ Fn Number (Map Tag String) (-> respo.schema/ChildPair)
+                    keyed-element idx $ render-card link
                 comp-typed-reel (>> states :reel) reel ({}) on-control!
           :examples $ []
           :schema $ quote $ Fn
@@ -89,7 +90,7 @@
           :require
             respo-ui.core :refer $ hsl
             respo-ui.core :as ui
-            respo.core :refer $ defcomp >> list-> <> div a button span
+            respo.core :refer $ defcomp >> keyed-> keyed-element <> div a button span
             respo.comp.space :refer $ =<
             reel.comp.reel :refer $ comp-typed-reel
     'app.config $ %{} 'FileEntry
