@@ -16,7 +16,7 @@
                 store $ :store reel
                 states $ decode-map-as
                   .unwrap-or (get store :states) ({})
-                  Map Tag Dynamic
+                  Map respo.schema/CoordKey Dynamic
               div
                 {} $ :style ui/global
                 div
@@ -196,8 +196,8 @@
               let
                   states $ decode-map-as
                     .unwrap-or (get store :states) ({})
-                    Map Tag Dynamic
-                assoc store :states $ decode-map-as (update-state-tree states cursor s) (Map Tag Dynamic)
+                    Map respo.schema/CoordKey Dynamic
+                assoc store :states $ decode-map-as (update-state-tree states cursor s) (Map respo.schema/CoordKey Dynamic)
           :examples $ []
           :schema $ quote $ Fn (Map Tag Dynamic) app.schema/Op String Number
             -> $ Map Tag Dynamic
