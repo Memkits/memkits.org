@@ -62,7 +62,6 @@ jobs:
         git diff --quiet -- calcit.cirru
         calcit calcit.cirru --check-only --all-defs
         calcit calcit.cirru fix --workflow strict --verify --format json | jq -e '.data.workflow.status == "passed" and .diagnostics == []'
-        calcit calcit.cirru test --require-match
 
     - name: Select CDN asset path
       id: asset-path

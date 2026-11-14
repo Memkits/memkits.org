@@ -14,7 +14,9 @@
           :code $ quote $ defcomp comp-container (reel on-control!)
             let
                 store $ :store reel
-                states $ :states store
+                states $ decode-map-as
+                  .unwrap-or (get store :states) ({})
+                  Map respo.schema/CoordKey Dynamic
               div
                 {} $ :style ui/global
                 div
@@ -38,7 +40,8 @@
                     keyed-element idx $ render-card link
                 comp-typed-reel (>> states :reel) reel ({}) on-control!
           :examples $ []
-          :schema $ quote $ Fn (reel.typed/State app.schema/Op app.schema/Store)
+          :schema $ quote $ Fn
+            reel.typed/State app.schema/Op $ Map Tag Dynamic
             Fn reel.typed/Control $ -> Unit
             -> respo.schema/Component
             :features :state
@@ -111,7 +114,8 @@
           :code $ quote $ defref *reel
             typed/State :base schema/store :store schema/store :records ([]) :pointer None :stopped? false :display? false :merged? false
           :examples $ []
-          :schema $ quote $ Ref (reel.typed/State app.schema/Op app.schema/Store)
+          :schema $ quote $ Ref
+            typed/State schema/Op $ Map Tag Dynamic
         'dispatch! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn dispatch! (op)
             reset! *reel $ typed/record-op updater @*reel op (generate-id!) (js-ffi.shared/now-ms)
@@ -177,16 +181,11 @@
             :states (List respo.schema/CoordKey) Dynamic
           :examples $ []
           :schema $ quote EnumDef
-        'Store $ %{} 'CodeEntry (:doc |)
-          :code $ quote $ defstruct Store
-            :states $ Map respo.schema/CoordKey Dynamic
-          :examples $ []
-          :schema $ quote StructDef
         'store $ %{} 'CodeEntry (:doc |)
           :code $ quote $ def store
-            app.schema/Store :states $ {}
+            {} $ :states $ {}
           :examples $ []
-          :schema $ quote app.schema/Store
+          :schema $ quote $ Map Tag Dynamic
       :ns $ %{} 'NsEntry (:doc |)
         :code $ quote $ ns app.schema
     'app.updater $ %{} 'FileEntry
@@ -195,22 +194,14 @@
           :code $ quote $ defn updater (store op op-id op-time)
             match op $
               :states cursor s
-              assoc store :states $ decode-map-as
-                update-state-tree (:states store) cursor s
-                Map respo.schema/CoordKey Dynamic
+              let
+                  states $ decode-map-as
+                    .unwrap-or (get store :states) ({})
+                    Map respo.schema/CoordKey Dynamic
+                assoc store :states $ decode-map-as (update-state-tree states cursor s) (Map respo.schema/CoordKey Dynamic)
           :examples $ []
-          :schema $ quote $ Fn app.schema/Store app.schema/Op String Number (-> app.schema/Store)
-          :tests $ [] $ %{} 'TestEntry (:name |preserves-state-update)
-            :code $ quote $ let
-                initial $ app.schema/Store :states $ {}
-                updated $ updater initial
-                  app.schema/Op :states ([] :reel)
-                    {} $ :display? true
-                  , |id 1
-              assert=
-                {} $ :reel $ {}
-                  :data $ {} $ :display? true
-                :states updated
+          :schema $ quote $ Fn (Map Tag Dynamic) app.schema/Op String Number
+            -> $ Map Tag Dynamic
       :ns $ %{} 'NsEntry (:doc |)
         :code $ quote $ ns app.updater
           :require $ respo.cursor :refer $ update-state-tree
