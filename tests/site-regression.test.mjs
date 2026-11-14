@@ -55,6 +55,12 @@ test("nested state updates preserve unrelated fields in the full store", () => {
   assert.equal(get(get(get(next, t.states), t.editor), t.data), "draft");
   assert.ok(c._$e_(get(original, t.states), c._$n__$M_()), "The original states remain immutable");
   assert.doesNotThrow(() => make_string(comp_container(newReel(next), () => {})));
+  for (const key of ["editor", 0]) {
+    const changed = updater(next, c._PCT__$o__$o_(Op, t.states, c._$L_(key), "mixed key"), "fixture", 0);
+    assert.equal(get(get(get(changed, t.states), key), t.data), "mixed key");
+    assert.equal(get(changed, t.untouched), "keep this field");
+    assert.doesNotThrow(() => make_string(comp_container(newReel(changed), () => {})));
+  }
 });
 test("published typed Reel records a single Enum state operation", () => {
   const next = record_op(updater, newReel(store), c._PCT__$o__$o_(Op, t.states, c._$L_(t.editor), "through reel"), "fixture", 0);
