@@ -18,12 +18,12 @@ https://github.com/calcit-lang/respo-calcit-workflow
 自定义回调若仍发送匿名 `:reel/*` 事件，需要切换到具名 Control。
 
 正式依赖还包括 Respo 0.19.9、UI 0.15.3，传递依赖 JS-FFI 0.2.16 和 Router 0.12.7。
-状态 Map 仍可保留未更新字段。
+首页内部状态改用具名 Store；Reel 调试器中该状态显示为 Store 结构。
 
 ### 开发与验收范围
 
-Reel 使用 `State<Op,Map<Tag,Dynamic>>`，原调试快捷键和面板行为保留；
-应用 store 仍是开放 Map，局部状态更新保留其他字段，不更换业务数据协议。
+Reel 使用 `State<Op,Store>`；Store 的状态树继续容纳 Reel 的异构状态。
+首页没有持久化存档入口，原调试快捷键和面板行为保留。
 
 Run `caps --ci --strict`, `yarn install --immutable`,
 `yarn build`, and `node --test tests/*.test.mjs`. Canonical files are
