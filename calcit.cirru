@@ -44,6 +44,7 @@
             reel.typed/State app.schema/Op $ Map Tag Dynamic
             Fn reel.typed/Control $ -> Unit
             -> respo.schema/Component
+            :features :state
         'links $ %{} 'CodeEntry (:doc |)
           :code $ quote $ def links
             []
@@ -152,14 +153,14 @@
               hud! |error build-errors
             , &unit
           :examples $ []
-          :schema $ quote $ Fn (-> Unit) (:features :js-ffi :state)
+          :schema $ quote $ Fn (-> Unit) (:features :io :js-ffi :state)
         'render-app! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn render-app! ()
             render-with! mount-target
               fn () $ comp-container @*reel on-control!
               , dispatch!
           :examples $ []
-          :schema $ quote $ Fn (-> Unit) (:features :js-ffi :state)
+          :schema $ quote $ Fn (-> Unit) (:features :io :js-ffi :state)
       :ns $ %{} 'NsEntry (:doc |)
         :code $ quote $ ns app.main
           :require
