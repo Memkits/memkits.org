@@ -198,10 +198,10 @@
                   states $ decode-map-as
                     .unwrap-or (get store :states) ({})
                     Map respo.schema/CoordKey Dynamic
-                assoc store :states $ decode-map-as (update-state-tree states cursor s) (Map respo.schema/CoordKey Dynamic)
+                assoc store :states $ update-state-map states cursor s
           :examples $ []
           :schema $ quote $ Fn (Map Tag Dynamic) app.schema/Op String Number
             -> $ Map Tag Dynamic
       :ns $ %{} 'NsEntry (:doc |)
         :code $ quote $ ns app.updater
-          :require $ respo.cursor :refer $ update-state-tree
+          :require $ respo.cursor :refer $ update-state-map

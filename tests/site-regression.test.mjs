@@ -50,6 +50,9 @@ test("card Option fallbacks render without trying to use an Option as a String",
 });
 test("nested state updates preserve unrelated fields in the full store", () => {
   const original = c.assoc(store, t.untouched, "keep this field");
+  const root = updater(original, c._PCT__$o__$o_(Op, t.states, c._$L_(), false), "fixture", 0);
+  assert.equal(get(get(root, t.states), t.data), false);
+  assert.equal(get(root, t.untouched), "keep this field");
   const next = updater(original, c._PCT__$o__$o_(Op, t.states, c._$L_(t.editor), "draft"), "fixture", 0);
   assert.equal(get(next, t.untouched), "keep this field");
   assert.equal(get(get(get(next, t.states), t.editor), t.data), "draft");
