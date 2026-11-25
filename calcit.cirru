@@ -41,9 +41,10 @@
                 comp-typed-reel (>> states :reel) reel ({}) on-control!
           :examples $ []
           :schema $ quote $ Fn
-            reel.typed/State app.schema/Op $ Map Tag Dynamic
+            reel.typed/State app.schema/Op $ Map Tag StoreValue
             Fn reel.typed/Control (-> Unit) (:features :state)
             -> respo.schema/Component
+            :generics StoreValue
             :features :state
         'links $ %{} 'CodeEntry (:doc |)
           :code $ quote $ def links
