@@ -10,14 +10,14 @@ http://memkits.org/
 
 https://github.com/calcit-lang/respo-calcit-workflow
 
-### Calcit 0.45.1 使用说明
+### Calcit 0.46.0 使用说明
 
-升级时配套使用正式 Calcit 和 `@calcit/procs` 0.45.1 及 Reel 0.11.9，重装依赖并生成 JS。
+升级时配套使用正式 Calcit 和 `@calcit/procs` 0.46.0 及 Reel 0.11.10，重装依赖并生成 JS。
 11 个工具卡片的名称、URL、顺序以及调试快捷键沿用原版。
 应用操作通过具名 `Op` 进入历史，面板与快捷键通过 `on-control!` 接收 `reel.typed/Control`。
 自定义回调若仍发送匿名 `:reel/*` 事件，需要切换到具名 Control。
 
-正式依赖还包括 Respo 0.19.18、UI 0.16.5，传递依赖 JS-FFI 0.2.24 和 Router 0.12.17。
+正式依赖还包括 Respo 0.20.0、UI 0.16.6，传递依赖 JS-FFI 0.2.26 和 Router 0.12.18。
 状态 Map 仍可保留未更新字段。
 
 ### 开发与验收范围
